@@ -1,1 +1,7 @@
-index.html.erb
+<h1>Group Index</h1>
+<ul>
+	<% @groups.each do |g| %>
+		<li><%= link_to group.name, g %></li>
+	<% end %>
+</ul>
+<%= link_to "Create New Group", new_group_path %>
