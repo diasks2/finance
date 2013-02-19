@@ -1,0 +1,12 @@
+<%= form_for @category do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.collection_select :group_id, Group.all, :id, :name, {}, {:id => "group_select"} %>
+  <br>
+  <br>
+  <%= f.submit "Create New Category" %>
+
+<% end %>

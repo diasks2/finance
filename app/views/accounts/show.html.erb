@@ -1,0 +1,10 @@
+<h1><%= @account.name %></h1>
+Account owner: <%= @account.owner %><br>
+Category: <%# @account.category.name %><br>
+Phone Number: <%= @account.phone_number %><br>
+Address: <%= markdown(@account.address) %><br>
+URL: <%= markdown(@account.url) %><br>
+
+<%= link_to "Edit", edit_account_path(@account) %> | 
+<%= link_to "Delete", @account, confirm: "Are you sure?", method: :delete %> | 
+<%= link_to "Back to Account Index", accounts_path %>
