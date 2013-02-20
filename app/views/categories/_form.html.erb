@@ -1,12 +1,34 @@
-<%= form_for @category do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+<div class="well">
+	<%= form_for @category, :html => {:class => "form-horizontal"} do |f| %>
+	  <%= render 'shared/error_messages', object: f.object %>
+	  	<fieldset>
+	  		<div class="well">
+	  	
+        		<div class="control-group">
+        			<%= f.label :name, "Category Name:", :class => "control-label" %>
+          			<div class="controls">
+		  				<%= f.text_field :name %>
+		  			</div>
+		  		</div>		
 
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-
-  <%= f.collection_select :group_id, Group.all, :id, :name, {}, {:id => "group_select"} %>
-  <br>
-  <br>
-  <%= f.submit "Create New Category" %>
-
-<% end %>
+		  		<div class="control-group">
+		  			<%= f.label :name, "Group Name:", :class => "control-label" %>
+          			<div class="controls">
+		  				<%= f.collection_select :group_id, Group.all, :id, :name, {}, {:class => "span3 group_select" } %>
+		  			</div>
+		  		</div>		
+			</div>
+			<div class="center">
+		  		<%= f.submit "Create New Category", :class => "btn btn-large btn-primary" %>
+		  	</div>	
+		</fieldset>
+	<% end %>
+</div>
+<script>
+$(function() { 
+  $(".group_select").select2({
+    placeholder: 'Select Group',
+    allowClear: true
+  });
+});
+</script>

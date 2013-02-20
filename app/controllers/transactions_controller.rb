@@ -36,10 +36,6 @@ class TransactionsController < ApplicationController
 
   end
 
-  def edit
-    @transaction = Transaction.find(params[:id])
-  end
-
   def update
     @transaction = Transaction.find(params[:id])
     if @transaction.update_attributes(params[:transaction])

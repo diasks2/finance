@@ -1,6 +1,30 @@
-<h1><%= @transaction.account.name %></h1>
-<% if @transaction.currency == "USD" %>
-Amount: <%= number_to_currency(@transaction.converted_amount) %><br>
-<% else %>
-Amount: <%= number_to_currency(@transaction.converted_amount, :unit => "¥", :precision => 0) %><br>
-<% end %>
+<h1 class="center"><%= @transaction.account.name %></h1>
+
+<table class="table">
+ <thead>
+    <tr>
+      <th>Date</th>
+      <th>Currency</th>
+      <th>Amount</th>
+      <th>Unique Hash</th>
+      <th>Account</th>
+      <th>Category</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @transaction.date %></td>
+      <td><%= @transaction.currency %></td>
+      <% if @transaction.currency == "USD" %>
+      	<td><%= number_to_currency(@transaction.converted_amount) %></td>
+      <% else %>
+      	<td><%= number_to_currency(@transaction.converted_amount, :unit => "¥", :precision => 0) %></td>
+      <% end %>	
+      <td><%= @transaction.unique_hash %></td>
+      <td><%= @transaction.account.name %></td>
+      <td><%= @transaction.category.name %></td>
+      <td><%= @transaction.category.group.name %></td>
+    </tr>
+  </tbody>
+</table>
