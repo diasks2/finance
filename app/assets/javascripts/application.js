@@ -15,4 +15,5 @@
 //= require bootstrap
 //= require bootstrap-datepicker/core
 //= require select2
+//= require d3
 //= require_tree .

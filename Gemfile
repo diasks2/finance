@@ -6,6 +6,7 @@ gem 'bootstrap-sass', '~> 2.3.0.0'
 gem 'bootstrap-datepicker-rails'
 gem 'select2-rails'
 gem 'seed-fu'
+gem 'd3_rails'
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
