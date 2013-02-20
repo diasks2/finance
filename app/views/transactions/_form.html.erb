@@ -1,0 +1,62 @@
+
+<%= form_for @transaction do |form| %> 
+  <%= render 'shared/error_messages', object: form.object %>
+
+    <%= form.label  :currency, "Currency:" %>
+    <%= form.select :currency, options_for_select([['¥ JPY', 'JPY'], ['$ USD', 'USD']]), {}, {:class => "currency_select"} %>
+
+    <%= form.label :date, "Date:" %>
+    <%= form.text_field :date, :class => "datepicker" %>
+
+  <% [:transaction_a, :transaction_b].each do |transaction| %>
+    <%= fields_for transaction do |f| %>
+ 
+     
+      <div class="input-prepend">
+        <%= f.label :converted_amount, "Amount:" %>
+        <span class="add-on"><span class="yen">¥</span><span class="dollar">$</span></span>
+        <%= f.text_field :converted_amount, :class => "span2", :id => "prependedInput" %>
+      </div>
+
+      <%= f.collection_select :account_id, Account.all, :id, :name, {}, {:class => "account_select"} %>
+
+      <%= f.collection_select :category_id, Category.all, :id, :name, {}, {:class => "category_select"} %>
+    <% end %> 
+  <% end %>  
+  
+  <%= form.submit "Submit", :class => "btn btn-primary" %>
+<% end %>
+<script>
+$(function() {
+
+  $('.currency_select').on('change', function() {
+    if(this.value === "USD"){
+      $('.dollar').show();
+      $('.yen').hide();
+    } 
+    else if (this.value === "JPY") {
+      $('.dollar').hide();
+      $('.yen').show();
+    }
+    else {
+      $('.dollar').hide();
+      $('.yen').hide();
+    }
+  });  
+  $('.datepicker').datepicker({
+      format: 'yyyy/mm/dd'
+  });
+  $(".account_select").select2({
+    placeholder: 'Select Account',
+        allowClear: true
+  });
+  $(".category_select").select2({
+    placeholder: 'Select Category',
+        allowClear: true
+  }); 
+  $(".currency_select").select2({
+    placeholder: 'Select Currency',
+        allowClear: true
+  }); 
+});  
+</script>  

@@ -1,7 +1,7 @@
 <h1>Category Index</h1>
 <ul>
-	<% @cateogories.each do |c| %>
-		<li><%= link_to category.name, c %></li>
+	<% @categories.each do |c| %>
+		<li><%= link_to c.name, c %> (<%= c.group.name %>)</li>
 	<% end %>
 </ul>
 <%= link_to "Create New Category", new_category_path %>
