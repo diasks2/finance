@@ -52,6 +52,12 @@ class TransactionsController < ApplicationController
 
   def index
     @transactions = Transaction.order("date").all
+    respond_to do |format|
+      format.html
+      format.json{
+        render :json => @transactions.to_json
+      }
+    end
   end
 
   def destroy
