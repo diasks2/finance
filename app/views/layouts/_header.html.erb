@@ -34,7 +34,7 @@
 	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(transactions_path) %>">
 	    <%= link_to "Create New Transaction", new_transaction_path, :class => "btn btn-warning" %>
 	  </div>
-	  <div class="pull-right blue" id="exchange_div">$1 = ¥<%= rate %></div>
+	  <div class="pull-right blue" id="exchange_div" style="<%= 'display:none;' unless current_page?(root_path) %>">$1 = ¥<%= rate %></div>
 	</div>    
   </div>
 </div>

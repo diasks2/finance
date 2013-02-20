@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
 
   def graph1
     #@transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("category_id != ?", 1).where("category_id != ?", 2).where("category_id != ?", 3).where("category_id != ?", 4).where("category_id != ?", 5).group("category_id")
-    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).group("category_id")
+    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).where("groups.id != ?", 21).group("category_id")
     respond_to do |format|
       format.json{
         render :json => JSON.generate(@transactions.as_json(:include => [:category, :group]))
@@ -20,7 +20,7 @@ class StaticPagesController < ApplicationController
      #   render :json => JSON.generate(@transactions.as_json(:include => [:category, :group]))
      # }
     #end
-    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).group("groups.id").sum("amount")
+    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).where("groups.id != ?", 21).group("groups.id").sum("amount")
     respond_to do |format|
       format.html
       format.json do
