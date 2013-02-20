@@ -6,6 +6,14 @@ $fridgeblue: #2480de;
   color: $green;
 }
 
+.blue {
+  color: $fridgeblue;
+}
+
+.white {
+  color: $white;
+}
+
 .red {
   color: $red;
 }
@@ -77,4 +85,8 @@ body {
 
 .navbar .btn {
   margin-top: 8px;
+}
+
+#exchange_div {
+  margin-top:13px;
 }

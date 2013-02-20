@@ -31,6 +31,7 @@
 	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(transactions_path) %>">
 	    <%= link_to "Create New Transaction", new_transaction_path, :class => "btn btn-warning" %>
 	  </div>
+	  <div class="pull-right blue" id="exchange_div">$1 = ¥<span id="exchange_rate"></span></div>
 	</div>    
   </div>
 </div>

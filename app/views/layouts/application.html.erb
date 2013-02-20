@@ -16,4 +16,22 @@
 	    <%= yield %>
     </div>  
   </body>
+  <script>
+    $(function() {
+      $.ajax({
+          url: 'http://openexchangerates.org/api/latest.json?app_id=e688119a47ab4782867c3f90bd0a8924',
+          dataType: 'jsonp',
+          success: function(json) {
+              // Rates are in `json.rates`
+              // Base currency (USD) is `json.base`
+              // UNIX Timestamp when rates were collected is in `json.timestamp`
+
+              // If you're using money.js, do this:
+              fx.rates = json.rates;
+              fx.base = json.base;
+              $('#exchange_rate').append(fx.rates.JPY.toFixed(2));
+          }
+      });
+    });
+  </script>
 </html>
