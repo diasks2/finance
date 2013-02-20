@@ -1,2 +1,7 @@
-<h1>Transactions#index</h1>
-<p>Find me in app/views/transactions/index.html.erb</p>
+<h1>Transaction Index</h1>
+<ul>
+	<% @transactions.each do |t| %>
+		<li><%= link_to t.date, t%> <%= t.account.name %></li>
+	<% end %>
+</ul>
+<%= link_to "Create New Transaction", new_transaction_path %>

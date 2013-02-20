@@ -13,11 +13,11 @@ class Transaction < ActiveRecord::Base
 
     def converted_amount
       if currency == "USD"
-	  	amount.to_d / 100 if amount
-	  else
-	  	amount if amount	
-	  end	
-	end
+	  	  amount.to_d / 100 if amount
+  	  else
+  	  	amount if amount	
+  	  end	
+	  end
   
     def converted_amount=(dollars)
       if currency == "USD"	

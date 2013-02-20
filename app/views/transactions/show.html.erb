@@ -1,2 +1,6 @@
-<h1>Transactions#show</h1>
-<p>Find me in app/views/transactions/show.html.erb</p>
+<h1><%= @transaction.account.name %></h1>
+<% if @transaction.currency == "USD" %>
+Amount: <%= number_to_currency(@transaction.converted_amount) %><br>
+<% else %>
+Amount: <%= number_to_currency(@transaction.converted_amount, :unit => "¥", :precision => 0) %><br>
+<% end %>

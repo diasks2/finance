@@ -1,30 +1,54 @@
 
-<%= form_for @transaction do |form| %> 
+<%= form_for @transaction, :html => {:class => "form-horizontal"} do |form| %> 
   <%= render 'shared/error_messages', object: form.object %>
-
-    <%= form.label  :currency, "Currency:" %>
-    <%= form.select :currency, options_for_select([['¥ JPY', 'JPY'], ['$ USD', 'USD']]), {}, {:class => "currency_select"} %>
-
-    <%= form.label :date, "Date:" %>
-    <%= form.text_field :date, :class => "datepicker" %>
-
-  <% [:transaction_a, :transaction_b].each do |transaction| %>
-    <%= fields_for transaction do |f| %>
- 
-     
-      <div class="input-prepend">
-        <%= f.label :converted_amount, "Amount:" %>
-        <span class="add-on"><span class="yen">¥</span><span class="dollar">$</span></span>
-        <%= f.text_field :converted_amount, :class => "span2", :id => "prependedInput" %>
+  <fieldset>
+     <span class="help-block">Enter new transactions here. Each transaction consists of a debit and a credit amount. The sum of the debit and credit must equal zero.</span>
+     <br>
+     <div class="control-group">
+      <%= form.label  :currency, "Currency:", :class => "control-label" %>
+      <div class="controls">
+        <%= form.select :currency, options_for_select([['¥ JPY', 'JPY'], ['$ USD', 'USD']]), {}, {:class => "span2 currency_select"} %>
       </div>
+    </div>  
+    <div class="control-group">
+      <%= form.label :date, "Date:", :class => "control-label" %>
+      <div class="controls">
+        <%= form.text_field :date, :class => "span2 datepicker" %>
+      </div>
+    </div>
 
-      <%= f.collection_select :account_id, Account.all, :id, :name, {}, {:class => "account_select"} %>
-
-      <%= f.collection_select :category_id, Category.all, :id, :name, {}, {:class => "category_select"} %>
-    <% end %> 
-  <% end %>  
-  
-  <%= form.submit "Submit", :class => "btn btn-primary" %>
+    <% [:transaction_a, :transaction_b].each do |transaction| %>
+      <h4><% if transaction == :transaction_a %>Expense Amount (Positive Number)<% else %>Revenue Amount (Negative Number)<% end %></h4>
+      <div class="well">
+        <%= fields_for transaction do |f| %>
+          <div class="control-group">
+            <%= f.label :converted_amount, "Amount:", :class => "control-label" %>
+            <div class="controls">
+              <div class="input-prepend">
+                <span class="add-on"><span class="yen">¥</span><span class="dollar">$</span></span>
+                <%= f.text_field :converted_amount, :class => "span2", :id => "prependedInput" %>
+              </div>
+            </div>
+          </div>    
+          <div class="control-group">
+            <%= f.label :account_id, "Account:", :class => "control-label" %>
+            <div class="controls">
+              <%= f.collection_select :account_id, Account.all, :id, :name, {}, {:class => "span3 account_select"} %>
+            </div>
+          </div>    
+          <div class="control-group">
+            <%= f.label :category_id, "Category:", :class => "control-label" %>
+            <div class="controls">
+              <%= f.collection_select :category_id, Category.all, :id, :name, {}, {:class => "span3 category_select"} %>
+            </div>
+          </div>    
+      </div>    
+      <% end %> 
+    <% end %>  
+    <div class="center">
+      <%= form.submit "Create Transaction", :class => "btn btn-large btn-primary" %>
+    </div>  
+  </fieldset>
 <% end %>
 <script>
 $(function() {

@@ -1,5 +1,45 @@
 @import "bootstrap";
 
+$fridgeblue: #2480de;
+
+h1 {
+  color: $fridgeblue;
+  font-family: 'Open Sans', sans-serif;
+}
+
 .dollar {
   display: none;
+}
+
+.nav li a {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.nav li {
+  padding-top: 3px;
+}
+
+.nav > li.active {
+  border-top: 3px solid #fff;
+  padding-top: 0px;
+}
+
+.center {
+  text-align:center;
+}
+
+body {
+  background: url('/assets/background.png') repeat;
+}
+
+.currency_select {
+	margin-left: 0px;
+}
+
+.account_select {
+	margin-left: 0px;
+}
+
+.category_select {
+	margin-left: 0px;
 }
