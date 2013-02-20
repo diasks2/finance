@@ -19,3 +19,6 @@ A ‘single entry’ system is one where the numerical values being stored are o
 | Expense          | Increase  | Decrease  |
 | Capital          | Decrease  | Increase  |
 +------------------+-----------+-----------+
+
+*To seed category and group tables:*  
+`$ rake db:seed_fu` 

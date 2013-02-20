@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class TransactionsController < ApplicationController
   
   def new
@@ -50,7 +51,7 @@ class TransactionsController < ApplicationController
   end
 
   def index
-    @transactions = Transaction.order("id").all
+    @transactions = Transaction.order("date").all
   end
 
   def destroy

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ApplicationHelper
   def markdown(text)
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(

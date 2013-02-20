@@ -13,16 +13,24 @@
 	  	<% @accounts.each do |account| %>
 		    <tr>
 		      <td><%= link_to account.name, account %></td>
-		      <td><%= account.owner %></td>
-		      <td><%= number_to_currency(yen_balance(account.id), :unit => "¥", :precision => 0) %></td>
-		      <td><%= number_to_currency(dollar_balance(account.id)) %></td>
+		      <td>
+		      	<% if account.internal == true %>
+		      		<span class="green">
+		      	<% else %>
+		      		<span class="red">
+		      	<% end %>
+		      		<%= account.owner %>
+		      		</span>
+		      </td>
+		      <td><%= number_to_currency(0 - yen_balance(account.id), :unit => "¥", :precision => 0) %></td>
+		      <td><%= number_to_currency(0 - dollar_balance(account.id)) %></td>
 		    </tr>
 	    <% end %>
 	    <tr>
 	    	<td><strong>Totals</strong></td>
 		    <td>*Should equal zero --->*</td>
-		    <td><strong><%= number_to_currency(yen_balance_zero, :unit => "¥", :precision => 0) %></strong></td>
-		    <td><strong><%= number_to_currency(dollar_balance_zero) %></strong></td>
+		    <td><strong><%= number_to_currency(0 - yen_balance_zero, :unit => "¥", :precision => 0) %></strong></td>
+		    <td><strong><%= number_to_currency(0 - dollar_balance_zero) %></strong></td>
 		</tr>    
 	  </tbody>
 	</table>

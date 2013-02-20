@@ -28,6 +28,9 @@
 	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(groups_path) %>">
 	    <%= link_to "Create New Group", new_group_path, :class => "btn btn-warning" %>
 	  </div>
+	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(transactions_path) %>">
+	    <%= link_to "Create New Transaction", new_transaction_path, :class => "btn btn-warning" %>
+	  </div>
 	</div>    
   </div>
 </div>

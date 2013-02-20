@@ -1,5 +1,22 @@
 <% provide(:title, @group.name) %>
-<h1><%= @group.name %></h1>
+<h1 class="center"><%= @group.name %></h1>
+
+<h2>Sub-categories</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Category</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @categories.each do |c| %>
+	    <tr>
+	      <td><%= c.name%></td>
+	    </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to "Edit", edit_group_path(@group) %> | 
 <%= link_to "Delete", @group, confirm: "Are you sure?", method: :delete %> | 

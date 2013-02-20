@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class GroupsController < ApplicationController
   
   def new
@@ -28,10 +29,11 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @categories = Category.where("group_id = ?", params[:id]).all
   end
 
   def index
-    @groups = Group.order("id").all
+    @groups = Group.order("name").all
   end
 
   def destroy

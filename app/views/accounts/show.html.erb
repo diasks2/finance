@@ -7,7 +7,7 @@
   Phone: <%= @account.phone_number %><br>
   <%= markdown(@account.url) %>
 </address>
-	
+
 <h2>Account History</h2>
 
 <table class="table">
@@ -26,9 +26,9 @@
 	      <td><%= link_to at.date, at%></td>
 	      <% if at.currency == "USD" %>
 	      	<td></td>
-	        <td><%= number_to_currency(at.converted_amount) %></td>
+	        <td><%= number_to_currency(0 - at.converted_amount) %></td>
 	      <% else %>	  
-	      	<td><%= number_to_currency(at.converted_amount, :unit => "¥", :precision => 0) %></td>
+	      	<td><%= number_to_currency(0 - at.converted_amount, :unit => "¥", :precision => 0) %></td>
 	      	<td></td>
 	      <% end %>	
 	      <td><%= at.category.name %></td>
@@ -37,8 +37,8 @@
     <% end %>
     <tr>
     	<td><strong>Totals</strong></td>
-	    <td><strong><%= number_to_currency(yen_balance(@account.id), :unit => "¥", :precision => 0) %></strong></td>
-	    <td><strong><%= number_to_currency(dollar_balance(@account.id)) %></strong></td>
+	    <td><strong><%= number_to_currency(0 - yen_balance(@account.id), :unit => "¥", :precision => 0) %></strong></td>
+	    <td><strong><%= number_to_currency(0 - dollar_balance(@account.id)) %></strong></td>
 	    <td></td>
 	    <td></td>
   </tbody>

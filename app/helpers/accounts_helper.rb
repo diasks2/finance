@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module AccountsHelper
   def yen_balance(account_id)
   	Transaction.where("account_id = ?", account_id).where("currency = ?", "JPY").sum("amount")

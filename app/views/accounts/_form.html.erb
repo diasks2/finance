@@ -19,6 +19,13 @@
           </div>    
 
           <div class="control-group">
+            <%= f.label  :internal, "Personal Account?:", :class => "control-label" %>
+            <div class="controls">
+              <%= f.select :internal, options_for_select([['Yes', true], ['No', false]]), {}, {:class => "span2 personal_select"} %>
+            </div>
+          </div>
+
+          <div class="control-group">
           <%= f.label :phone_number, "Phone Number:", :class => "control-label" %>
             <div class="controls">
               <%= f.text_field :phone_number, :class => "input-xxlarge" %>
@@ -46,4 +53,11 @@
     </fieldset>
   <% end %>
 </div>  
-  
+<script>
+$(function() { 
+  $(".personal_select").select2({
+    placeholder: 'Personal Account?',
+    allowClear: true
+  });
+});
+</script>

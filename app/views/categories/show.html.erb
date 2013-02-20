@@ -1,6 +1,6 @@
 <% provide(:title, @category.name) %>
-<h1><%= @category.name %></h1>
-<h2>Group: <%= @category.group.name %></h2>
+<h1 class="center"><%= @category.name %></h1>
+<h2 class="center">Group: <%= @category.group.name %></h2>
 
 <%= link_to "Edit", edit_category_path(@category) %> | 
 <%= link_to "Delete", @category, confirm: "Are you sure?", method: :delete %> | 

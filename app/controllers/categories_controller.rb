@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CategoriesController < ApplicationController
   
   def new
@@ -31,7 +32,7 @@ class CategoriesController < ApplicationController
   end
 
   def index
-    @categories = Category.order("id").all
+    @categories = Category.order("group_id").order("name").all
   end
 
   def destroy
