@@ -12,7 +12,22 @@
 	    <li class="<%= 'active' if current_page?(accounts_path) %>">
 	    	<%= link_to "Accounts", accounts_path %>
 	    </li>
+	    <li class="<%= 'active' if current_page?(categories_path) %>">
+	    	<%= link_to "Categories", categories_path %>
+	    </li>
+	    <li class="<%= 'active' if current_page?(groups_path) %>">
+	    	<%= link_to "Groups", groups_path %>
+	    </li>
 	  </ul>
+	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(accounts_path) %>">
+	    <%= link_to "Create New Account", new_account_path, :class => "btn btn-warning" %>
+	  </div>
+	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(categories_path) %>">
+	    <%= link_to "Create New Category", new_category_path, :class => "btn btn-warning" %>
+	  </div>
+	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(groups_path) %>">
+	    <%= link_to "Create New Group", new_group_path, :class => "btn btn-warning" %>
+	  </div>
 	</div>    
   </div>
 </div>

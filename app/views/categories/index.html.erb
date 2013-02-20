@@ -1,7 +1,18 @@
-<h1>Category Index</h1>
-<ul>
-	<% @categories.each do |c| %>
-		<li><%= link_to c.name, c %> (<%= c.group.name %>)</li>
-	<% end %>
-</ul>
-<%= link_to "Create New Category", new_category_path %>
+<% provide(:title, 'Categories') %>
+<h1 class="center">Categories</h1>
+<table class="table">
+ <thead>
+    <tr>
+      <th>Name</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @categories.each do |c| %>
+	    <tr>
+	      <td><%= link_to c.name, c %></td>
+	      <td><%= c.group.name %></td>
+	    </tr>
+	<% end %>      
+  </tbody>
+</table>

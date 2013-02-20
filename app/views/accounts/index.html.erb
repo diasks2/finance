@@ -1,25 +1,27 @@
 <% provide(:title, 'Accounts') %>
 <h1 class="center">Accounts</h1>
-
 	<table class="table">
 	 <thead>
 	    <tr>
 	      <th>Name</th>
 	      <th>Owner</th>
-	      <th>Balance</th>
+	      <th>¥ Balance</th>
+	      <th>$ Balance</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	  	<% @accounts.each do |account| %>
 		    <tr>
-		      <td><%= link_to account.name, account%></td>
+		      <td><%= link_to account.name, account %></td>
 		      <td><%= account.owner %></td>
-		      <td>$2,000</td>
+		      <td><%= number_to_currency(yen_balance(account.id), :unit => "¥", :precision => 0) %></td>
+		      <td><%= number_to_currency(dollar_balance(account.id)) %></td>
 		    </tr>
 	    <% end %>
+	    <tr>
+	    	<td><strong>Totals</strong></td>
+		    <td>*Should equal zero --->*</td>
+		    <td><strong><%= number_to_currency(yen_balance_zero, :unit => "¥", :precision => 0) %></strong></td>
+		    <td><strong><%= number_to_currency(dollar_balance_zero) %></strong></td>
 	  </tbody>
 	</table>
-
-<div class="center">
-	<%= link_to "Create New Account", new_account_path, :class => "btn btn-primary" %>
-</div>	

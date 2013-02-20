@@ -1,10 +1,17 @@
 module AccountsHelper
-  def full_title(page_title)
-    base_title = "Personal Finance App"
-    if page_title.empty?
-      base_title
-    else
-      "#{base_title} | #{page_title}"
-    end
+  def yen_balance(account_id)
+  	Transaction.where("account_id = ?", account_id).where("currency = ?", "JPY").sum("amount")
+  end	
+
+  def dollar_balance(account_id)
+  	Transaction.where("account_id = ?", account_id).where("currency = ?", "USD").sum("amount").to_d / 100
+  end	
+
+  def yen_balance_zero
+  	Transaction.where("currency = ?", "JPY").sum("amount")
+  end	
+
+  def dollar_balance_zero
+  	Transaction.where("currency = ?", "USD").sum("amount").to_d / 100
   end
 end

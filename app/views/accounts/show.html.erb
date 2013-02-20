@@ -1,9 +1,47 @@
-<h1><%= @account.name %></h1>
-Account owner: <%= @account.owner %><br>
-Phone Number: <%= @account.phone_number %><br>
-Address: <%= markdown(@account.address) %><br>
-URL: <%= markdown(@account.url) %><br>
+<h1 class="center"><%= @account.name %></h1>
+
+<address>
+  <strong><%= @account.owner %></strong><br>
+  <%= markdown(@account.address) %>
+  Phone: <%= @account.phone_number %><br>
+  <%= markdown(@account.url) %>
+</address>
+	
+<h2>Account History</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>¥ Amount</th>
+      <th>$ Amount</th>
+      <th>Category</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @account_transactions.each do |at| %>
+	    <tr>
+	      <td><%= link_to at.date, at%></td>
+	      <% if at.currency == "USD" %>
+	      	<td></td>
+	        <td><%= number_to_currency(at.converted_amount) %></td>
+	      <% else %>	  
+	      	<td><%= number_to_currency(at.converted_amount, :unit => "¥", :precision => 0) %></td>
+	      	<td></td>
+	      <% end %>	
+	      <td><%= at.category.name %></td>
+	      <td><%= at.category.group.name %></td>
+	    </tr>
+    <% end %>
+    <tr>
+    	<td><strong>Totals</strong></td>
+	    <td><strong><%= number_to_currency(yen_balance(@account.id), :unit => "¥", :precision => 0) %></strong></td>
+	    <td><strong><%= number_to_currency(dollar_balance(@account.id)) %></strong></td>
+	    <td></td>
+	    <td></td>
+  </tbody>
+</table>
 
 <%= link_to "Edit", edit_account_path(@account) %> | 
-<%= link_to "Delete", @account, confirm: "Are you sure?", method: :delete %> | 
 <%= link_to "Back to Account Index", accounts_path %>

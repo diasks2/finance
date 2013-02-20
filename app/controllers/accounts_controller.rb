@@ -28,6 +28,7 @@ class AccountsController < ApplicationController
 
   def show
     @account = Account.find(params[:id])
+    @account_transactions = Transaction.where("account_id = ?", params[:id]).all
   end
 
   def index

@@ -2,7 +2,7 @@
 <%= form_for @transaction, :html => {:class => "form-horizontal"} do |form| %> 
   <%= render 'shared/error_messages', object: form.object %>
   <fieldset>
-     <span class="help-block">Enter new transactions here. Each transaction consists of a debit and a credit amount. The sum of the debit and credit must equal zero.</span>
+     <span class="help-block">Enter new transactions here. Each transaction consists of a debit and a credit amount. The sum of the debit and credit must equal zero. <strong>Enter USD amounts as integers. For example: $65.56 = 6556</strong></span>
      <br>
      <div class="control-group">
       <%= form.label  :currency, "Currency:", :class => "control-label" %>
@@ -16,6 +16,12 @@
         <%= form.text_field :date, :class => "span2 datepicker" %>
       </div>
     </div>
+    <div class="control-group">
+      <%= form.label :category_id, "Category:", :class => "control-label" %>
+      <div class="controls">
+        <%= form.collection_select :category_id, Category.all, :id, :name, {}, {:class => "span3 category_select"} %>
+      </div>
+    </div>    
 
     <% [:transaction_a, :transaction_b].each do |transaction| %>
       <h4><% if transaction == :transaction_a %>Expense Amount (Positive Number)<% else %>Revenue Amount (Negative Number)<% end %></h4>
@@ -34,12 +40,6 @@
             <%= f.label :account_id, "Account:", :class => "control-label" %>
             <div class="controls">
               <%= f.collection_select :account_id, Account.all, :id, :name, {}, {:class => "span3 account_select"} %>
-            </div>
-          </div>    
-          <div class="control-group">
-            <%= f.label :category_id, "Category:", :class => "control-label" %>
-            <div class="controls">
-              <%= f.collection_select :category_id, Category.all, :id, :name, {}, {:class => "span3 category_select"} %>
             </div>
           </div>    
       </div>    

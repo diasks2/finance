@@ -1,7 +1,16 @@
-<h1>Group Index</h1>
-<ul>
-	<% @groups.each do |g| %>
-		<li><%= link_to g.name, g %></li>
-	<% end %>
-</ul>
-<%= link_to "Create New Group", new_group_path %>
+<% provide(:title, 'Groups') %>
+<h1 class="center">Groups</h1>
+<table class="table">
+ <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @groups.each do |g| %>
+	    <tr>
+	      <td><%= link_to g.name, g %></td>
+	    </tr>
+	<% end %>      
+  </tbody>
+</table>

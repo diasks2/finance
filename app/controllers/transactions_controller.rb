@@ -16,10 +16,13 @@ class TransactionsController < ApplicationController
     
     date = params[:transaction][:date]
     currency = params[:transaction][:currency]
+    category = params[:transaction][:category_id]
     @transaction_a.update_attribute :date, date
     @transaction_b.update_attribute :date, date
     @transaction_a.update_attribute :currency, currency
     @transaction_b.update_attribute :currency, currency
+    @transaction_a.update_attribute :category_id, category
+    @transaction_b.update_attribute :category_id, category
 	    
     if @transaction_a.converted_amount + @transaction_b.converted_amount == 0 && @transaction_a.date == @transaction_b.date && @transaction_a.currency == @transaction_b.currency
 	    if @transaction_a.save && @transaction_b.save
