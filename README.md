@@ -10,6 +10,7 @@ A ‘single entry’ system is one where the numerical values being stored are o
 
 3) No values can ever be amended or deleted. They must be negated with an opposing entry (a ‘contra’) and re-entered (‘re-booked’). This provides a completely secure audit trail.  
 
+
 +------------------+-----------+-----------+
 |                  |   Debit   |  Credit   |
 +------------------+-----------+-----------+
@@ -18,7 +19,8 @@ A ‘single entry’ system is one where the numerical values being stored are o
 | Income (revenue) | Decrease  | Increase  |
 | Expense          | Increase  | Decrease  |
 | Capital          | Decrease  | Increase  |
-+------------------+-----------+-----------+
++------------------+-----------+-----------+  
+
 
 *To seed category and group tables:*  
 `$ rake db:seed_fu` 
