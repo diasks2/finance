@@ -7,7 +7,8 @@
 
 
 <script>
-var url = '/graph.json';
+var url1 = '/graph1.json';
+var url2 = '/graph2.json';
 
 var width = 960,
     height = 500,
@@ -21,7 +22,6 @@ var arc = d3.svg.arc()
     .innerRadius(radius - 70);
 
 var pie = d3.layout.pie()
-    .sort(null)
     .value(function(d) { return d.amount; });
 
 var svg = d3.select("#chart").append("svg")
@@ -30,7 +30,7 @@ var svg = d3.select("#chart").append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-d3.json(url, function(error, data) {
+d3.json(url1, function(error, data) {
   console.log(data)
   data.forEach(function(d) {
     d.amount = +d.amount;
@@ -59,7 +59,7 @@ var svg2 = d3.select("#chart2").append("svg")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-d3.json(url, function(error, data) {
+d3.json(url2, function(error, data) {
   console.log(data)
   data.forEach(function(d) {
     d.amount = +d.amount;
@@ -72,13 +72,13 @@ d3.json(url, function(error, data) {
 
   g.append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.group.name); });
+      .style("fill", function(d) { return color(d.data.group_id); });
 
   g.append("text")
       .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
       .attr("dy", ".35em")
       .style("text-anchor", "middle")
-      .text(function(d) { return d.data.group.name; });
+      .text(function(d) { return d.data.group_id; });
 
 });
 
