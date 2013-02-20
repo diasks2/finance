@@ -1,0 +1,20 @@
+<% provide(:title, 'Historical Exchange Rates') %>
+<h1 class="center">Historical Exchange Rates</h1>
+<table class="table">
+ <thead>
+    <tr>
+      <th>Date</th>
+      <th>Currency</th>
+      <th>Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @rates.each do |r| %>
+	    <tr>
+	      <td><%= link_to r.created_at, r %></td>
+	      <td><%= r.currency %></td>
+	      <td><%= r.rate %></td>
+	    </tr>
+	<% end %>      
+  </tbody>
+</table>

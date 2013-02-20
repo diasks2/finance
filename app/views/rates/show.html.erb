@@ -1,0 +1,6 @@
+<% provide(:title, "#{"%.2f" % @rate.rate}") %>
+<h1 class="center"><%= "%.2f" % @rate.rate %></h1>
+<h2 class="center">Date: <%= @rate.created_at %></h2>
+
+<%= link_to "Delete", @rate, confirm: "Are you sure?", method: :delete %> | 
+<%= link_to "Back to Rate Index", rates_path %>

@@ -15,4 +15,9 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
+
+  def rate
+    rate = Rate.last
+    "%.2f" % rate.rate
+  end  
 end

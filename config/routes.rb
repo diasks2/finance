@@ -7,4 +7,5 @@ Finance::Application.routes.draw do
   resources :transactions
   resources :categories
   resources :groups
+  resources :rates
 end
