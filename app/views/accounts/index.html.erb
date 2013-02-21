@@ -1,39 +1,44 @@
 <% provide(:title, 'Accounts') %>
 <h1 class="center">Accounts</h1>
-	<table class="table">
-	 <thead>
+<p>
+  Download:
+  <%= link_to "CSV", accounts_path(format: "csv") %> |
+  <%= link_to "Excel", accounts_path(format: "xls") %>
+</p>
+<table class="table">
+ <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>¥ Balance</th>
+      <th>$ Balance</th>
+      <th>Converted Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @accounts.each do |account| %>
 	    <tr>
-	      <th>Name</th>
-	      <th>Owner</th>
-	      <th>¥ Balance</th>
-	      <th>$ Balance</th>
-	      <th>Converted Balance</th>
+	      <td><%= link_to account.name, account %></td>
+	      <td>
+	      	<% if account.internal == true %>
+	      		<span class="green">
+	      	<% else %>
+	      		<span class="red">
+	      	<% end %>
+	      		<%= account.owner %>
+	      		</span>
+	      </td>
+	      <td><%= number_to_currency(0 - yen_balance(account.id), :unit => "¥", :precision => 0) %></td>
+	      <td><%= number_to_currency(0 - dollar_balance(account.id)) %></td>
+	      <td><%= number_to_currency(0 - converted_balance(account.id), :unit => "¥", :precision => 0) %></td>
 	    </tr>
-	  </thead>
-	  <tbody>
-	  	<% @accounts.each do |account| %>
-		    <tr>
-		      <td><%= link_to account.name, account %></td>
-		      <td>
-		      	<% if account.internal == true %>
-		      		<span class="green">
-		      	<% else %>
-		      		<span class="red">
-		      	<% end %>
-		      		<%= account.owner %>
-		      		</span>
-		      </td>
-		      <td><%= number_to_currency(0 - yen_balance(account.id), :unit => "¥", :precision => 0) %></td>
-		      <td><%= number_to_currency(0 - dollar_balance(account.id)) %></td>
-		      <td><%= number_to_currency(0 - converted_balance(account.id), :unit => "¥", :precision => 0) %></td>
-		    </tr>
-	    <% end %>
-	    <tr>
-	    	<td><strong>Totals</strong></td>
-		    <td>*Should equal zero --->*</td>
-		    <td><strong><%= number_to_currency(0 - yen_balance_zero, :unit => "¥", :precision => 0) %></strong></td>
-		    <td><strong><%= number_to_currency(0 - dollar_balance_zero) %></strong></td>
-		    <td><strong><%= number_to_currency(0 - converted_balance_zero, :unit => "¥", :precision => 0) %></strong></td>
-		</tr>    
-	  </tbody>
-	</table>
+    <% end %>
+    <tr>
+    	<td><strong>Totals</strong></td>
+	    <td>*Should equal zero --->*</td>
+	    <td><strong><%= number_to_currency(0 - yen_balance_zero, :unit => "¥", :precision => 0) %></strong></td>
+	    <td><strong><%= number_to_currency(0 - dollar_balance_zero) %></strong></td>
+	    <td><strong><%= number_to_currency(0 - converted_balance_zero, :unit => "¥", :precision => 0) %></strong></td>
+	</tr>    
+  </tbody>
+</table>

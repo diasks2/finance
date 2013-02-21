@@ -34,6 +34,11 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = Account.order("id").all
+    respond_to do |format|
+      format.html
+      format.csv { send_data Account.to_csv }
+      format.xls
+    end  
   end
 
   def destroy
