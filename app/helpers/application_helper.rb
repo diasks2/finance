@@ -16,8 +16,25 @@ module ApplicationHelper
     end
   end
 
-  def rate
+  def string_rate
     rate = Rate.last
     "%.2f" % rate.rate
-  end  
+  end
+
+  def rate
+    rate = Rate.last
+    rate.rate
+  end
+
+  def yen_assets
+    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def dollar_assets
+    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+  end
+
+  def converted_assets
+    (Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
 end

@@ -15,7 +15,7 @@
 	      <td><%= link_to g.name, g %></td>
         <td><%= number_to_currency(group_yen_total(g.id), :unit => "¥", :precision => 0) %></td>
         <td><%= number_to_currency(group_dollar_total(g.id)) %></td>
-        <td><%= group_converted_total(g.id) %></td>
+        <td><%= number_to_currency(group_converted_total(g.id), :unit => "¥", :precision => 0) %></td>
 	    </tr>
 	<% end %>      
   </tbody>

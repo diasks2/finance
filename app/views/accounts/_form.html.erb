@@ -24,6 +24,13 @@
               <%= f.select :internal, options_for_select([['Yes', true], ['No', false]]), {}, {:class => "span2 personal_select"} %>
             </div>
           </div>
+          <span class="help-block">If account is not personal, set liquid to 'No'. If account is personal, set liquid to 'Yes' only if able to turn to cash in 24 hours or less.</span>
+          <div class="control-group">
+            <%= f.label  :liquid, "Liquid?:", :class => "control-label" %>
+            <div class="controls">
+              <%= f.select :liquid, options_for_select([['Yes', true], ['No', false]]), {}, {:class => "span2 liquid_select"} %>
+            </div>
+          </div>
 
           <div class="control-group">
           <%= f.label :phone_number, "Phone Number:", :class => "control-label" %>
@@ -57,6 +64,10 @@
 $(function() { 
   $(".personal_select").select2({
     placeholder: 'Personal Account?',
+    allowClear: true
+  });
+  $(".personal_select").select2({
+    placeholder: 'Liquid?',
     allowClear: true
   });
 });

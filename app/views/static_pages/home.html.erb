@@ -5,6 +5,30 @@
 <div id="chart"></div>
 <div id="chart2"></div>
 
+<table class="table">
+ <thead>
+    <tr>
+      <th>¥ Assets</th>
+      <th>$ Assets</th>
+      <th>Converted Assets</th>
+      <th>¥ Liabilities</th>
+      <th>$ Liabilities</th>
+      <th>Converted Liabilities</th>
+      <th>¥ Equity</th>
+      <th>$ Equity</th>
+      <th>Equity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= number_to_currency(0 - yen_assets, :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(0 - dollar_assets) %></td>
+      <td><%= number_to_currency(0 - converted_assets, :unit => "¥", :precision => 0) %></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 <script>
 var url1 = '/graph1.json';

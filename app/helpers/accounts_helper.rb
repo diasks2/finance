@@ -6,7 +6,11 @@ module AccountsHelper
 
   def dollar_balance(account_id)
   	Transaction.where("account_id = ?", account_id).where("currency = ?", "USD").sum("amount").to_d / 100
-  end	
+  end
+
+  def converted_balance(account_id)
+    (Transaction.where("account_id = ?", account_id).where("currency = ?", "USD").sum("amount").to_d / 100 * rate) + Transaction.where("account_id = ?", account_id).where("currency = ?", "JPY").sum("amount")
+  end 
 
   def yen_balance_zero
   	Transaction.where("currency = ?", "JPY").sum("amount")
@@ -14,5 +18,9 @@ module AccountsHelper
 
   def dollar_balance_zero
   	Transaction.where("currency = ?", "USD").sum("amount").to_d / 100
+  end
+
+  def converted_balance_zero
+    (Transaction.where("currency = ?", "USD").sum("amount").to_d / 100 * rate) + Transaction.where("currency = ?", "JPY").sum("amount")
   end
 end

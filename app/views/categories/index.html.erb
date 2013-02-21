@@ -5,6 +5,9 @@
     <tr>
       <th>Name</th>
       <th>Group</th>
+      <th>¥ Total</th>
+      <th>$ Total</th>
+      <th>Converted Total</th>
     </tr>
   </thead>
   <tbody>
@@ -12,6 +15,9 @@
 	    <tr>
 	      <td><%= link_to c.name, c %></td>
 	      <td><%= c.group.name %></td>
+        <td><%= number_to_currency(category_yen_total(c.id), :unit => "¥", :precision => 0) %></td>
+        <td><%= number_to_currency(category_dollar_total(c.id)) %></td>
+        <td><%= number_to_currency(category_converted_total(c.id), :unit => "¥", :precision => 0) %></td>
 	    </tr>
 	<% end %>      
   </tbody>
