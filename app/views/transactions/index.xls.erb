@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Transactions">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Account ID</Data></Cell>
+        <Cell><Data ss:Type="String">Date</Data></Cell>
+        <Cell><Data ss:Type="String">Amount</Data></Cell>
+        <Cell><Data ss:Type="String">Currency</Data></Cell>
+        <Cell><Data ss:Type="String">Unique Hash</Data></Cell>
+        <Cell><Data ss:Type="String">Category ID</Data></Cell>
+        <Cell><Data ss:Type="String">Created At</Data></Cell>
+      </Row>
+    <% @transactions.each do |t| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= t.account_id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t.date %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= t.amount %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t.currency %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t.unique_hash %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= t.category_id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= t.created_at %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -1,5 +1,10 @@
 <% provide(:title, 'Transactions') %>
 <h1 class="center">Transaction Index</h1>
+<p>
+  Download:
+  <%= link_to "CSV", transactions_path(format: "csv") %> |
+  <%= link_to "Excel", transactions_path(format: "xls") %>
+</p>
 <table class="table">
  <thead>
     <tr>
@@ -9,7 +14,6 @@
       <th>Account</th>
       <th>Category</th>
       <th>Group</th>
-
     </tr>
   </thead>
   <tbody>
