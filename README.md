@@ -8,7 +8,9 @@ A ‘single entry’ system is one where the numerical values being stored are o
 
 2) The sum of all the values in the system at any one time must be zero (the ‘trial balance’).  
 
-3) No values can ever be amended or deleted. They must be negated with an opposing entry (a ‘contra’) and re-entered (‘re-booked’). This provides a completely secure audit trail.  
+3) No values can ever be amended or deleted. They must be negated with an opposing entry (a ‘contra’) and re-entered (‘re-booked’). This provides a completely secure audit trail. 
+
+Assets - Liabilities = (Shareholders' or Owners' Equity) 
 
 *To seed category and group tables:*  
 `$ rake db:seed_fu` 

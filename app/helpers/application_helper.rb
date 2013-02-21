@@ -37,4 +37,76 @@ module ApplicationHelper
   def converted_assets
     (Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
   end
+
+  def liquid_yen_assets
+    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", true).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def liquid_dollar_assets
+    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+  end
+
+  def liquid_converted_assets
+    (Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def illiquid_yen_assets
+    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", false).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def illiquid_dollar_assets
+    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+  end
+
+  def illiquid_converted_assets
+    (Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def yen_liabilities
+    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def dollar_liabilities
+    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+  end
+
+  def converted_liabilities
+    (Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def st_yen_liabilities
+    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", true).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def st_dollar_liabilities
+    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+  end
+
+  def st_converted_liabilities
+    (Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def lt_yen_liabilities
+    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", false).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def lt_dollar_liabilities
+    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+  end
+
+  def lt_converted_liabilities
+    (Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def equity_yen
+    Transaction.includes(:category, :group, :account).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
+
+  def equity_dollar
+    Transaction.includes(:category, :group, :account).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+  end
+
+  def equity_converted
+    (Transaction.includes(:category, :group, :account).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+  end
 end

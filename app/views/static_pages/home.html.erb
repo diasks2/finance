@@ -1,34 +1,105 @@
 <% provide(:title, 'Home') %>
 
 <h1 class="center">Personal Finance App</h1>
-
-<div id="chart"></div>
-<div id="chart2"></div>
-
+<br>
+<h2 class="center">Balance Sheet (¥ and $)</h2>
 <table class="table">
  <thead>
     <tr>
+      <th></th>
       <th>¥ Assets</th>
       <th>$ Assets</th>
-      <th>Converted Assets</th>
+      <th></th>
       <th>¥ Liabilities</th>
       <th>$ Liabilities</th>
-      <th>Converted Liabilities</th>
       <th>¥ Equity</th>
       <th>$ Equity</th>
-      <th>Equity</th>
+      <th>¥ Total</th>
+      <th>$ Total</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><%= number_to_currency(0 - yen_assets, :unit => "¥", :precision => 0) %></td>
-      <td><%= number_to_currency(0 - dollar_assets) %></td>
-      <td><%= number_to_currency(0 - converted_assets, :unit => "¥", :precision => 0) %></td>
+      <td><strong>Liquid</strong></td>
+      <td><%= number_to_currency(0 - liquid_yen_assets, :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(0 - liquid_dollar_assets) %></td>
+      <td><strong>Short-term</strong></td>
+      <td><%= number_to_currency(st_yen_liabilities, :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(st_dollar_liabilities) %></td>
+      <td></td>
+      <td></td>
       <td></td>
       <td></td>
     </tr>
+    <tr>
+      <td><strong>Illiquid</strong></td>
+      <td><%= number_to_currency(0 - illiquid_yen_assets, :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(0 - illiquid_dollar_assets) %></td>
+      <td><strong>Long-term</strong></td>
+      <td><%= number_to_currency(lt_yen_liabilities, :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(lt_dollar_liabilities) %></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><strong><%= number_to_currency(0 - yen_assets, :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong><%= number_to_currency(0 - dollar_assets) %></strong></td>
+      <td><strong>Total</strong></td>
+      <td><strong><%= number_to_currency(yen_liabilities, :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong><%= number_to_currency(dollar_liabilities) %></strong></td>
+      <td><strong><%= number_to_currency(0 - equity_yen, :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong><%= number_to_currency(0 - equity_dollar) %></strong></td>
+      <td><strong><%= number_to_currency((0 - yen_assets) - ((yen_liabilities) + (0 - equity_yen)), :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong><%= number_to_currency((0 - dollar_assets) - ((dollar_liabilities) + (0 - equity_dollar)), :unit => "¥", :precision => 0) %></strong></td>
+    </tr>
   </tbody>
 </table>
+
+<h2 class="center">Balance Sheet (Converted to ¥)</h2>
+<table class="table">
+ <thead>
+    <tr>
+      <th></th>
+      <th>Converted Assets</th>
+      <th></th>
+      <th>Converted Liabilities</th>
+      <th>Converted Equity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Liquid</strong></td>
+      <td><span class="green"><%= number_to_currency(0 - liquid_converted_assets, :unit => "¥", :precision => 0) %></span></td>
+      <td><strong>Short-term</strong></td>
+      <td><span class="green"><%= number_to_currency(st_converted_liabilities, :unit => "¥", :precision => 0) %></span></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><strong>Illiquid</strong></td>
+      <td><span class="green"><%= number_to_currency(0 - illiquid_converted_assets, :unit => "¥", :precision => 0) %></span></td>
+      <td><strong>Long-term</strong></td>
+      <td><span class="green"><%= number_to_currency(lt_converted_liabilities, :unit => "¥", :precision => 0) %></span></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><span class="green"><strong><%= number_to_currency(0 - converted_assets, :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><strong>Total</strong></td>
+      <td><span class="green"><strong><%= number_to_currency(converted_liabilities, :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="green"><strong><%= number_to_currency(0 - equity_converted, :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="green"><strong><%= number_to_currency((0 - converted_assets) - ((converted_liabilities) + (0 - equity_converted)), :unit => "¥", :precision => 0) %></strong></span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div id="chart"></div>
+<div id="chart2"></div>
 
 <script>
 var url1 = '/graph1.json';

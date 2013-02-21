@@ -19,16 +19,17 @@
           </div>    
 
           <div class="control-group">
-            <%= f.label  :internal, "Personal Account?:", :class => "control-label" %>
+            <%= f.label :internal, "Personal Account?:", :class => "control-label" %>
             <div class="controls">
-              <%= f.select :internal, options_for_select([['Yes', true], ['No', false]]), {}, {:class => "span2 personal_select"} %>
+              <%= f.select :internal, options_for_select([['No', false], ['Yes', true]]), {}, {:class => "span2 personal_select"} %>
             </div>
           </div>
           <span class="help-block">If account is not personal, set liquid to 'No'. If account is personal, set liquid to 'Yes' only if able to turn to cash in 24 hours or less.</span>
+          <br>
           <div class="control-group">
             <%= f.label  :liquid, "Liquid?:", :class => "control-label" %>
             <div class="controls">
-              <%= f.select :liquid, options_for_select([['Yes', true], ['No', false]]), {}, {:class => "span2 liquid_select"} %>
+              <%= f.select :liquid, options_for_select([['No', false], ['Yes', true]]), {}, {:class => "span2 liquid_select"} %>
             </div>
           </div>
 
@@ -66,7 +67,7 @@ $(function() {
     placeholder: 'Personal Account?',
     allowClear: true
   });
-  $(".personal_select").select2({
+  $(".liquid_select").select2({
     placeholder: 'Liquid?',
     allowClear: true
   });

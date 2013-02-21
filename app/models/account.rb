@@ -5,6 +5,5 @@ class Account < ActiveRecord::Base
 
     validates :name, presence: true
     validates :owner, presence: true
-    validates :internal, presence: true
 
 end
