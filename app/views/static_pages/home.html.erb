@@ -98,15 +98,70 @@
   </tbody>
 </table>
 
-<div id="chart"></div>
-<div id="chart2"></div>
+<h2 class="center">Expense by Category</h2>
+<div id="chart1">
+  <div class="vis-tool-tip" id="chart1_tool_tip">
+    <div id="vis-tool-tip-title1"></div> 
+  </div>
+</div>
+
+<table class="table">
+ <thead>
+    <tr>
+      <th>Name</th>
+      <th>Group</th>
+      <th>¥ Total</th>
+      <th>$ Total</th>
+      <th>Converted Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |c| %>
+      <tr>
+        <td><%= link_to c.name, c %></td>
+        <td><%= c.group.name %></td>
+        <td><%= number_to_currency(category_yen_total(c.id), :unit => "¥", :precision => 0) %></td>
+        <td><%= number_to_currency(category_dollar_total(c.id)) %></td>
+        <td><%= number_to_currency(category_converted_total(c.id), :unit => "¥", :precision => 0) %></td>
+      </tr>
+  <% end %>      
+  </tbody>
+</table>
+
+<h2 class="center">Expense by Group</h2>
+<div id="chart2">
+  <div class="vis-tool-tip" id="chart2_tool_tip">
+    <div id="vis-tool-tip-title2"></div> 
+  </div>
+</div>
+
+<table class="table">
+ <thead>
+    <tr>
+      <th>Name</th>
+      <th>¥ Total</th>
+      <th>$ Total</th>
+      <th>Converted Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @groups.each do |g| %>
+      <tr>
+        <td><%= link_to g.name, g %></td>
+        <td><%= number_to_currency(group_yen_total(g.id), :unit => "¥", :precision => 0) %></td>
+        <td><%= number_to_currency(group_dollar_total(g.id)) %></td>
+        <td><%= number_to_currency(group_converted_total(g.id), :unit => "¥", :precision => 0) %></td>
+      </tr>
+    <% end %>      
+  </tbody>
+</table>
 
 <script>
 var url1 = '/graph1.json';
 var url2 = '/graph2.json';
 
 var width = 960,
-    height = 500,
+    height = 400,
     radius = Math.min(width, height) / 2;
 
 var color = d3.scale.ordinal()
@@ -119,7 +174,7 @@ var arc = d3.svg.arc()
 var pie = d3.layout.pie()
     .value(function(d) { return d.amount; });
 
-var svg = d3.select("#chart").append("svg")
+var svg = d3.select("#chart1").append("svg")
     .attr("width", width)
     .attr("height", height)
   .append("g")
@@ -134,17 +189,24 @@ d3.json(url1, function(error, data) {
   var g = svg.selectAll(".arc")
       .data(pie(data))
     .enter().append("g")
-      .attr("class", "arc");
+      .attr("class", "arc")
+      .on("mouseover", mover)
+      .on("mouseout", mout);
 
   g.append("path")
       .attr("d", arc)
       .style("fill", function(d) { return color(d.data.category.name); });
 
-  g.append("text")
-      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".35em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.data.category.name; });
+  function mover(d) {
+    $("#chart1_tool_tip").fadeOut(100,function () {
+      $("#vis-tool-tip-title1").html(d.data.category.name);  
+      $("#chart1_tool_tip").fadeIn(100);
+    });
+  }
+
+  function mout(d) {
+    $("#chart1_tool_tip").fadeOut(50);
+  }
 
 });
 
@@ -163,18 +225,24 @@ d3.json(url2, function(error, data) {
   var g = svg2.selectAll(".arc")
       .data(pie(data))
     .enter().append("g")
-      .attr("class", "arc");
+      .attr("class", "arc")
+      .on("mouseover", mover)
+      .on("mouseout", mout);
 
   g.append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.group_id); });
+      .style("fill", function(d) { return color(d.data.name); });
 
-  g.append("text")
-      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".35em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.data.group_id; });
+  function mover(d) {
+    $("#chart2_tool_tip").fadeOut(100,function () {
+      $("#vis-tool-tip-title2").html(d.data.name);  
+      $("#chart2_tool_tip").fadeIn(100);
+    });
+  }
+
+  function mout(d) {
+    $("#chart2_tool_tip").fadeOut(50);
+}
 
 });
-
 </script>

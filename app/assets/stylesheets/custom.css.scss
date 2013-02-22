@@ -94,3 +94,24 @@ body {
 #exchange_div {
   margin-top:13px;
 }
+
+#chart1 {
+  position:relative;
+}
+
+#chart2 {
+  position:relative;
+}
+
+.vis-tool-tip {
+  display: none;
+  position:absolute;
+  left:10px;
+  top:10px;
+  color: white;
+  font-size: 14px;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 10px 5px 10px;
+  -moz-border-radius: 8px 8px;
+  border-radius: 8px 8px;
+}

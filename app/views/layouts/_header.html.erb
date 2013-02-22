@@ -3,9 +3,6 @@
   	<div class="container">
 	  <%= link_to(image_tag("logo.png", :alt => "FridgeChart"), root_path, :class => "brand") %>
 	  <ul class="nav">
-	  	<li class="<%= 'active' if current_page?(new_transaction_path) %>">
-	    	<%= link_to "New Transaction", new_transaction_path %>
-	    </li>
 	    <li class="<%= 'active' if current_page?(transactions_path) %>">
 	    	<%= link_to "Transactions", transactions_path %>
 	    </li>

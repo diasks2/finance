@@ -34,6 +34,11 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.order("name").all
+    respond_to do |format|
+      format.html
+      format.csv { send_data Group.to_csv, :filename => "Finance_groups_#{Time.now.to_date.to_s}.csv" }
+      format.xls
+    end  
   end
 
   def destroy

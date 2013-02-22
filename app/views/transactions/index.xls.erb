@@ -7,6 +7,7 @@
   <Worksheet ss:Name="Transactions">
     <Table>
       <Row>
+        <Cell><Data ss:Type="String">Transaction ID</Data></Cell>
         <Cell><Data ss:Type="String">Account ID</Data></Cell>
         <Cell><Data ss:Type="String">Date</Data></Cell>
         <Cell><Data ss:Type="String">Amount</Data></Cell>
@@ -17,6 +18,7 @@
       </Row>
     <% @transactions.each do |t| %>
       <Row>
+        <Cell><Data ss:Type="Number"><%= t.id %></Data></Cell>
         <Cell><Data ss:Type="Number"><%= t.account_id %></Data></Cell>
         <Cell><Data ss:Type="String"><%= t.date %></Data></Cell>
         <Cell><Data ss:Type="Number"><%= t.amount %></Data></Cell>

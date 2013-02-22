@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 class StaticPagesController < ApplicationController
   def home
+    @groups = Group.order("name").all
+    @categories = Category.order("group_id").order("name").all
   end
 
   def graph1
@@ -20,7 +22,7 @@ class StaticPagesController < ApplicationController
      #   render :json => JSON.generate(@transactions.as_json(:include => [:category, :group]))
      # }
     #end
-    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).where("groups.id != ?", 21).group("groups.id").sum("amount")
+    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).where("groups.id != ?", 21).group("groups.name").sum("amount")
     respond_to do |format|
       format.html
       format.json do
@@ -32,7 +34,7 @@ class StaticPagesController < ApplicationController
 private
 def custom_json_for(value)
   list = value.map do |k, v|
-    { :group_id => k,
+    { :name => k,
       :amount => v    
     }
   end

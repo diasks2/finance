@@ -57,7 +57,7 @@ class TransactionsController < ApplicationController
       format.json{
         render :json => @transactions.to_json
       }
-      format.csv { send_data Transaction.to_csv }
+      format.csv { send_data Transaction.to_csv, :filename => "Finance_transactions_#{Time.now.to_date.to_s}.csv" }
       format.xls
     end
   end

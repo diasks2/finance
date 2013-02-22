@@ -1,5 +1,10 @@
 <% provide(:title, 'Groups') %>
 <h1 class="center">Groups</h1>
+<p>
+  Download:
+  <%= link_to "CSV", groups_path(format: "csv") %> |
+  <%= link_to "Excel", groups_path(format: "xls") %>
+</p>
 <table class="table">
  <thead>
     <tr>
