@@ -5,11 +5,15 @@ class RatesController < ApplicationController
 
   def create
     @rate = Rate.new(params[:rate])
-    if @rate.save
-      redirect_to @rate, notice: "New Rate Successfully Created"
-    else
-      render :new
-    end
+      unless @rate.rate == nil
+        if @rate.save
+          redirect_to @rate, notice: "New Rate Successfully Created"  
+        else
+          render :new
+        end
+      else 
+        redirect_to new_rate_path, notice: "No New Rate Available"
+      end      
   end
 
   def edit
