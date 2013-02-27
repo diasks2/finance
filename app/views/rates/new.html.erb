@@ -1,3 +1,20 @@
 <% provide(:title, "New Exchange Rate") %>
+
 <h1 class="center">Create New Rate</h1>
+<h2 class="center">Current Rate = ¥<span id="exchange_rate"></span></h2>
 <%= render "form" %>
+
+
+<script>
+$(function() {
+  $.ajax({
+    url: 'http://openexchangerates.org/api/latest.json?app_id=e688119a47ab4782867c3f90bd0a8924',
+    dataType: 'jsonp',
+    success: function(json) {
+      var rate = json.rates;
+      $('input[id=exchange_rate_hidden]').val(rate.JPY);
+      $('#exchange_rate').append(rate.JPY.toFixed(2));
+    }
+  });
+});
+</script>

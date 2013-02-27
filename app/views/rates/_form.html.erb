@@ -5,18 +5,6 @@
 	<%= f.hidden_field :rate, :value => "", :id=> "exchange_rate_hidden" %>
 		  		
 	<div class="center">
-  		<%= f.submit "Get New Rate", :class => "btn btn-large btn-primary" %>
+  		<%= f.submit "Save New Rate", :class => "btn btn-large btn-primary" %>
   	</div>	
 <% end %>
-<script>
-    $(function() {
-      $.ajax({
-        url: 'http://openexchangerates.org/api/latest.json?app_id=e688119a47ab4782867c3f90bd0a8924',
-        dataType: 'jsonp',
-        success: function(json) {
-          var rate = json.rates;
-	        $('input[id=exchange_rate_hidden]').val(rate.JPY);
-        }
-      });
-    });
-</script>
