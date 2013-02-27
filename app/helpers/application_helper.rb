@@ -27,86 +27,134 @@ module ApplicationHelper
   end
 
   def yen_assets
-    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d
+    else
+      0
+    end 
   end
 
   def dollar_assets
-    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d / 100
+    else
+      0
+    end 
   end
 
   def converted_assets
-    (Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    (dollar_assets * rate) + yen_assets
   end
 
   def liquid_yen_assets
-    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", true).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", true).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", true).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d
+    else
+      0
+    end  
   end
 
   def liquid_dollar_assets
-    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", true).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", true).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d / 100
+    else
+      0
+    end  
   end
 
   def liquid_converted_assets
-    (Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    (liquid_dollar_assets * rate) + liquid_yen_assets
   end
 
   def illiquid_yen_assets
-    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", false).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", false).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", false).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d
+    else
+      0
+    end  
   end
 
   def illiquid_dollar_assets
-    Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", false).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", false).having("sum(transactions.amount) < ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d / 100
+    else
+      0
+    end  
   end
 
   def illiquid_converted_assets
-    (Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    (illiquid_dollar_assets * rate) + illiquid_yen_assets
   end
 
   def yen_liabilities
-    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d
+    else
+      0
+    end 
   end
 
   def dollar_liabilities
-    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d / 100
+    else
+      0
+    end 
   end
 
   def converted_liabilities
-    (Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    (dollar_liabilities * rate) + yen_liabilities
   end
 
   def st_yen_liabilities
-    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", true).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", true).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", true).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d
+    else
+      0
+    end  
   end
 
   def st_dollar_liabilities
-    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", true).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", true).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d / 100
+    else
+      0
+    end  
   end
 
   def st_converted_liabilities
-    (Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", true).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    (st_dollar_liabilities * rate) + st_yen_liabilities
   end
 
   def lt_yen_liabilities
-    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", false).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", false).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x } == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "JPY").where("liquid = ?", false).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d
+    else
+      0
+    end  
   end
 
   def lt_dollar_liabilities
-    Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+    unless Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", false).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d == nil
+      Account.group("accounts.id").includes(:transactions).where("internal = ?", true).where("currency = ?", "USD").where("liquid = ?", false).having("sum(transactions.amount) > ?", 0).sum("transactions.amount").values.inject{|sum,x| sum + x }.to_d / 100
+    else
+      0
+    end  
   end
 
   def lt_converted_liabilities
-    (Transaction.includes(:category, :group, :account).where("amount > ?", 0).where("liquid = ?", false).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("amount < ?", 0).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    (lt_dollar_liabilities * rate) + lt_yen_liabilities
   end
 
   def equity_yen
-    Transaction.includes(:category, :group, :account).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    yen_assets + yen_liabilities
   end
 
   def equity_dollar
-    Transaction.includes(:category, :group, :account).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100
+    dollar_assets + dollar_liabilities
   end
 
   def equity_converted
-    (Transaction.includes(:category, :group, :account).where("currency = ?", "USD").where("accounts.internal = ?", true).sum("amount").to_d / 100 * rate) + Transaction.includes(:category, :group, :account).where("currency = ?", "JPY").where("accounts.internal = ?", true).sum("amount")
+    converted_assets + converted_liabilities
   end
 end

@@ -32,14 +32,14 @@ class StaticPagesController < ApplicationController
   end
 
 private
-def custom_json_for(value)
-  list = value.map do |k, v|
-    { :name => k,
-      :amount => v    
-    }
+  def custom_json_for(value)
+    list = value.map do |k, v|
+      { :name => k,
+        :amount => v    
+      }
+    end
+    list.to_json
   end
-  list.to_json
-end
 
 end
 

@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
   end
 
   def index
-    @accounts = Account.order("id").all
+    @accounts = Account.order("internal DESC").order("owner").order("name").all
     respond_to do |format|
       format.html
       format.csv { send_data Account.to_csv, :filename => "Finance_accounts_#{Time.now.to_date.to_s}.csv" }
