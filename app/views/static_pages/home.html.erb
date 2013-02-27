@@ -153,7 +153,11 @@ var width = 960,
     radius = Math.min(width, height) / 2;
 
 var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    .range(["#0c3c6e",
+            "#024d99",
+            "#2a8aec",
+            "#d3dae1"
+            ]);
 
 var arc = d3.svg.arc()
     .outerRadius(radius - 10)
@@ -169,10 +173,19 @@ var svg = d3.select("#chart1").append("svg")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 d3.json(url1, function(error, data) {
-  console.log(data)
+  var arr = new Array();
   data.forEach(function(d) {
     d.amount = +d.amount;
+    arr.push(d.amount);
   });
+
+  var min = Math.min.apply(null, arr);
+  var max = Math.max.apply(null, arr);
+
+  var color = d3.scale.linear()
+    .domain([min, max])
+    .interpolate(d3.interpolateHsl)
+    .range(["#c0c3ca","#386df4"]);
 
   var g = svg.selectAll(".arc")
       .data(pie(data))
@@ -183,7 +196,7 @@ d3.json(url1, function(error, data) {
 
   g.append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.category.name); });
+      .style("fill", function(d) { return color(d.data.amount); });
 
   function mover(d) {
     $("#chart1_tool_tip").fadeOut(100,function () {
@@ -205,10 +218,19 @@ var svg2 = d3.select("#chart2").append("svg")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 d3.json(url2, function(error, data) {
-  console.log(data)
+  var arr = new Array();
   data.forEach(function(d) {
+    arr.push(d.amount);
     d.amount = +d.amount;
   });
+
+  var min = Math.min.apply(null, arr);
+  var max = Math.max.apply(null, arr);
+
+  var color2 = d3.scale.linear()
+    .domain([min, max])
+    .interpolate(d3.interpolateHsl)
+    .range(["#c0c3ca","#386df4"]);
 
   var g = svg2.selectAll(".arc")
       .data(pie(data))
@@ -219,7 +241,7 @@ d3.json(url2, function(error, data) {
 
   g.append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.name); });
+      .style("fill", function(d) { return color2(d.data.amount); });
 
   function mover(d) {
     $("#chart2_tool_tip").fadeOut(100,function () {
