@@ -5,6 +5,43 @@ class StaticPagesController < ApplicationController
     @categories = Category.where("id != ?", 65).order("group_id").order("name").all
   end
 
+  def income
+    ratearray = Rate.last
+    rate = ratearray.rate
+   
+    usd_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("amount < ?", 0).where("currency = ?", "USD").group("categories.name").sum("amount")
+    yen_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("amount < ?", 0).where("currency = ?", "JPY").group("categories.name").sum("amount")
+    dollar_revenues = usd_revenues.inject({}) { |h, (k, v)| h[k] = v.to_d / 100 * rate; h }
+
+    @revenues = dollar_revenues.merge(yen_revenues) {|key,val1,val2| val1+val2}.sort_by{|k,v| v}.reverse
+    
+    revenue_array = []
+    @revenues.each do |r|
+      revenue_array << r[1]
+    end
+    unless revenue_array.any?
+      @revenues_sum = 0
+    else
+      @revenues_sum = revenue_array.inject{|sum,x| sum + x }
+    end  
+
+    usd_expenses = Transaction.includes(:category, :group).where("groups.id != ?", 1).where("groups.id != ?", 21).where("amount > ?", 0).where("currency = ?", "USD").group("categories.name").sum("amount")
+    yen_expenses = Transaction.includes(:category, :group).where("groups.id != ?", 1).where("groups.id != ?", 21).where("amount > ?", 0).where("currency = ?", "JPY").group("categories.name").sum("amount")
+    dollar_expenses = usd_expenses.inject({}) { |h, (k, v)| h[k] = v.to_d / 100 * rate; h }
+
+    @expenses = dollar_expenses.merge(yen_expenses) {|key,val1,val2| val1+val2}.sort_by{|k,v| v}.reverse
+    
+    expense_array = []
+    @expenses.each do |e|
+      expense_array << e[1]
+    end
+    unless expense_array.any?
+      @expenses_sum = 0
+    else
+      @expenses_sum = expense_array.inject{|sum,x| sum + x }
+    end  
+  end
+
   def graph1
     @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).where("groups.id != ?", 21).group("category_id")
     respond_to do |format|

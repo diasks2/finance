@@ -4,6 +4,7 @@ Finance::Application.routes.draw do
   match '/graph1', to: 'static_pages#graph1'
   match '/graph2', to: 'static_pages#graph2'
   match '/networth', to: 'static_pages#networth'
+  match '/income', to: 'static_pages#income'
   resources :accounts
   resources :transactions
   resources :categories
