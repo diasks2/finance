@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module CategoriesHelper
   def category_yen_total(category_id)
   	Transaction.includes(:category, :group).where("amount > ?", 0).where("currency = ?", "JPY").where("category_id = ?", category_id).sum("amount")

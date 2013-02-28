@@ -20,7 +20,8 @@
 	    </div>	
 	   </fieldset>
 	<% end %>   
-</div>	
+</div>
+<p><%= link_to "Download Income Statement (PDF)", income_path(format: "pdf") %></p>
 <div id='income_statement'>
 	<%= render 'income_statement' %>
 </div>	

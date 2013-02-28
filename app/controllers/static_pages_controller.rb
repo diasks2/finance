@@ -22,12 +22,12 @@ class StaticPagesController < ApplicationController
       @date1 = Date.today - 1.month
       @date2 = Date.today
     end  
-
+   
     usd_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("date > ?", @date1).where("date < ?", @date2).where("amount < ?", 0).where("currency = ?", "USD").group("categories.name").sum("amount")
     yen_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("date > ?", @date1).where("date < ?", @date2).where("amount < ?", 0).where("currency = ?", "JPY").group("categories.name").sum("amount")
     dollar_revenues = usd_revenues.inject({}) { |h, (k, v)| h[k] = v.to_d / 100 * rate; h }
 
-    @revenues = dollar_revenues.merge(yen_revenues) {|key,val1,val2| val1+val2}.sort_by{|k,v| v}.reverse
+    @revenues = dollar_revenues.merge(yen_revenues) {|key,val1,val2| val1+val2}.sort_by{|k,v| v}
     
     revenue_array = []
     @revenues.each do |r|
@@ -58,6 +58,12 @@ class StaticPagesController < ApplicationController
     respond_to do |format|
       format.html
       format.js
+      format.pdf do
+        pdf = IncomePdf.new(@date1, @date2, @revenues, @revenues_sum, @expenses, @expenses_sum)
+        send_data pdf.render, filename: "Income Statement #{@date1} to #{@date2}",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
     end
       
   end

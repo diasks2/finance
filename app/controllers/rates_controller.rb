@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RatesController < ApplicationController
   def new
     @rate = Rate.new
