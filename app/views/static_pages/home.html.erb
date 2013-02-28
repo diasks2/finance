@@ -172,13 +172,6 @@ var width = 960,
     height = 400,
     radius = Math.min(width, height) / 2;
 
-var color = d3.scale.ordinal()
-    .range(["#0c3c6e",
-            "#024d99",
-            "#2a8aec",
-            "#d3dae1"
-            ]);
-
 var arc = d3.svg.arc()
     .outerRadius(radius - 10)
     .innerRadius(radius - 70);
@@ -205,7 +198,7 @@ d3.json(url1, function(error, data) {
   var color = d3.scale.linear()
     .domain([min, max])
     .interpolate(d3.interpolateHsl)
-    .range(["#c0c3ca","#386df4"]);
+    .range(["#f2d1f5","#9911a5"]);
 
   var g = svg.selectAll(".arc")
       .data(pie(data))
