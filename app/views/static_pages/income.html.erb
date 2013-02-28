@@ -30,14 +30,24 @@ $(function() {
   	$('.datepicker').datepicker({
       format: 'yyyy/mm/dd'
  	});
-
+  	$('#date_submit_button').attr("disabled", "disabled");
   	$("#date_field_2").change(function() {
   		var n = $('#date_field_1').val(); 
   		var m = $('#date_field_2').val(); 
   	    var date_a = new Date(n);
   	    var date_b = new Date(m);
-	    if (date_a >= date_b) {
-	        alert("'End Date' must be after 'Start Date'");
+	    if (date_a >= date_b ||	isNaN(date_a) == true || isNaN(date_b) == true) {
+	        $('#date_submit_button').attr("disabled", "disabled");
+	    } else {
+	    	$('#date_submit_button').removeAttr("disabled");
+	    }
+ 	});
+ 	$("#date_field_1").change(function() {
+  		var n = $('#date_field_1').val(); 
+  		var m = $('#date_field_2').val(); 
+  	    var date_a = new Date(n);
+  	    var date_b = new Date(m);
+	    if (date_a >= date_b ||	isNaN(date_a) == true || isNaN(date_b) == true) {
 	        $('#date_submit_button').attr("disabled", "disabled");
 	    } else {
 	    	$('#date_submit_button').removeAttr("disabled");

@@ -1,18 +1,24 @@
 <% provide(:title, @group.name) %>
 <h1 class="center"><%= @group.name %></h1>
 
-<h2>Sub-categories</h2>
+<h2 class="center">Sub-categories</h2>
 
 <table class="table">
   <thead>
     <tr>
       <th>Category</th>
+      <th>Total ¥</th>
+      <th>Total $</th>
+      <th>Converted Total</th>
     </tr>
   </thead>
   <tbody>
   	<% @categories.each do |c| %>
 	    <tr>
 	      <td><%= c.name%></td>
+        <td><%= number_to_currency(category_yen_total(c.id), :unit => "¥", :precision => 0) %></td>
+        <td><%= number_to_currency(category_dollar_total(c.id)) %></td>
+        <td><%= number_to_currency(category_converted_total(c.id), :unit => "¥", :precision => 0) %></td>
 	    </tr>
     <% end %>
   </tbody>
