@@ -2,97 +2,116 @@
 
 <h1 class="center">Personal Finance App</h1>
 <br>
+<h2 class="center">Networth (¥)</h2>
+<div id="chart3"></div>
+<br>
 <h2 class="center">Balance Sheet (¥ and $)</h2>
 <table class="table">
  <thead>
     <tr>
+      <th>Assets</th>
       <th></th>
-      <th>¥ Assets</th>
-      <th>$ Assets</th>
       <th></th>
-      <th>¥ Liabilities</th>
-      <th>$ Liabilities</th>
-      <th>¥ Equity</th>
-      <th>$ Equity</th>
+      <th>Liabilities and Owner's Equity</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Liquid</strong></td>
+      <td>Liquid</td>
       <td><%= number_to_currency(0 - liquid_yen_assets, :unit => "¥", :precision => 0) %></td>
       <td><%= number_to_currency(0 - liquid_dollar_assets) %></td>
-      <td><strong>Short-term</strong></td>
+      <td>Short-term Liabilities</td>
       <td><%= number_to_currency(st_yen_liabilities, :unit => "¥", :precision => 0) %></td>
       <td><%= number_to_currency(st_dollar_liabilities) %></td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
-      <td><strong>Illiquid</strong></td>
+      <td>Illiquid</td>
       <td><%= number_to_currency(0 - illiquid_yen_assets, :unit => "¥", :precision => 0) %></td>
       <td><%= number_to_currency(0 - illiquid_dollar_assets) %></td>
-      <td><strong>Long-term</strong></td>
+      <td>Long-term Liabilities</td>
       <td><%= number_to_currency(lt_yen_liabilities, :unit => "¥", :precision => 0) %></td>
       <td><%= number_to_currency(lt_dollar_liabilities) %></td>
-      <td></td>
-      <td></td>
     </tr>
     <tr>
-      <td><strong>Total</strong></td>
+      <td><strong>Total Assets</strong></td>
       <td><strong><%= number_to_currency(0 - yen_assets, :unit => "¥", :precision => 0) %></strong></td>
       <td><strong><%= number_to_currency(0 - dollar_assets) %></strong></td>
-      <td><strong>Total</strong></td>
+      <td><strong>Total Liabilities</strong></td>
       <td><strong><%= number_to_currency(yen_liabilities, :unit => "¥", :precision => 0) %></strong></td>
       <td><strong><%= number_to_currency(dollar_liabilities) %></strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><strong>Total Owner's Equity</strong></td>
       <td><strong><%= number_to_currency(0 - equity_yen, :unit => "¥", :precision => 0) %></strong></td>
       <td><strong><%= number_to_currency(0 - equity_dollar) %></strong></td>
-    </tr>
+    </tr>  
+    <tr>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(0 - yen_assets, :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(0 - dollar_assets) %></strong></span></td>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(yen_liabilities - equity_yen, :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(dollar_liabilities - equity_dollar) %></strong></span></td>
+    </tr>  
   </tbody>
 </table>
-
+<br>
 <h2 class="center">Balance Sheet (Converted to ¥)</h2>
 <table class="table">
  <thead>
     <tr>
+      <th>Assets</th>
       <th></th>
-      <th>Converted Assets</th>
+      <th>Liabilities and Owner's Equity</th>
       <th></th>
-      <th>Converted Liabilities</th>
-      <th>Converted Equity</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>Liquid</strong></td>
-      <td><span class="green"><%= number_to_currency(0 - liquid_converted_assets, :unit => "¥", :precision => 0) %></span></td>
-      <td><strong>Short-term</strong></td>
-      <td><span class="green"><%= number_to_currency(st_converted_liabilities, :unit => "¥", :precision => 0) %></span></td>
-      <td></td>
+      <td>Liquid</td>
+      <td><%= number_to_currency(0 - liquid_converted_assets, :unit => "¥", :precision => 0) %></td>
+      <td>Short-term Liabilities</td>
+      <td><%= number_to_currency(st_converted_liabilities, :unit => "¥", :precision => 0) %></td>
     </tr>
     <tr>
-      <td><strong>Illiquid</strong></td>
-      <td><span class="green"><%= number_to_currency(0 - illiquid_converted_assets, :unit => "¥", :precision => 0) %></span></td>
-      <td><strong>Long-term</strong></td>
-      <td><span class="green"><%= number_to_currency(lt_converted_liabilities, :unit => "¥", :precision => 0) %></span></td>
-      <td></td>
+      <td>Illiquid</td>
+      <td><%= number_to_currency(0 - illiquid_converted_assets, :unit => "¥", :precision => 0) %></td>
+      <td>Long-term Liabilities</td>
+      <td><%= number_to_currency(lt_converted_liabilities, :unit => "¥", :precision => 0) %></td>
     </tr>
     <tr>
-      <td><strong>Total</strong></td>
-      <td><span class="green"><strong><%= number_to_currency(0 - converted_assets, :unit => "¥", :precision => 0) %></strong></span></td>
-      <td><strong>Total</strong></td>
-      <td><span class="green"><strong><%= number_to_currency(converted_liabilities, :unit => "¥", :precision => 0) %></strong></span></td>
-      <td><span class="green"><strong><%= number_to_currency(0 - equity_converted, :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><strong>Total Assets</strong></td>
+      <td><strong><%= number_to_currency(0 - converted_assets, :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong>Total Liabilities</strong></td>
+      <td><strong><%= number_to_currency(converted_liabilities, :unit => "¥", :precision => 0) %></strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><strong>Total Owner's Equity</strong></td>
+      <td><strong><%= number_to_currency(0 - equity_converted, :unit => "¥", :precision => 0) %></strong></td>
+    </tr>
+    <tr>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(0 - converted_assets, :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(converted_liabilities - equity_converted, :unit => "¥", :precision => 0) %></strong></span></td>
     </tr>
   </tbody>
 </table>
-
+<br>
 <h2 class="center">Expense by Category</h2>
 <div id="chart1">
   <div class="vis-tool-tip" id="chart1_tool_tip">
     <div id="vis-tool-tip-title1"></div> 
   </div>
 </div>
-
+<br>
 <table class="table">
  <thead>
     <tr>
@@ -115,14 +134,14 @@
   <% end %>      
   </tbody>
 </table>
-
+<br>
 <h2 class="center">Expense by Group</h2>
 <div id="chart2">
   <div class="vis-tool-tip" id="chart2_tool_tip">
     <div id="vis-tool-tip-title2"></div> 
   </div>
 </div>
-
+<br>
 <table class="table">
  <thead>
     <tr>
@@ -147,6 +166,7 @@
 <script>
 var url1 = '/graph1.json';
 var url2 = '/graph2.json';
+var url3 = '/networth.json';
 
 var width = 960,
     height = 400,
@@ -255,4 +275,65 @@ d3.json(url2, function(error, data) {
 }
 
 });
+
+var margin = {top: 20, right: 90, bottom: 30, left: 90},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%d-%b-%y").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.networth); });
+
+var svg3 = d3.select("#chart3").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.json(url3, function(error, data) {
+  data.forEach(function(d) {
+    d.date = parseDate(d.date);
+    d.networth = +d.networth;
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.networth; }));
+
+  svg3.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg3.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Networth (¥)");
+
+  svg3.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+});
+
 </script>

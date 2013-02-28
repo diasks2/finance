@@ -18,6 +18,10 @@ $fridgeblue: #2480de;
   color: $red;
 }
 
+.pink {
+  color: #e15ed6;
+}
+
 h1 {
   color: $fridgeblue;
   font-family: 'Open Sans', sans-serif;
@@ -114,4 +118,21 @@ body {
   padding: 5px 10px 5px 10px;
   -moz-border-radius: 8px 8px;
   border-radius: 8px 8px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: #219634;
+  stroke-width: 1.5px;
 }

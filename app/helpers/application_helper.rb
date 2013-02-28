@@ -157,4 +157,5 @@ module ApplicationHelper
   def equity_converted
     converted_assets + converted_liabilities
   end
+
 end
