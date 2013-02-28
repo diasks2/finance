@@ -1,0 +1,69 @@
+<h2 class="center">Income Statement (¥)</h2>
+<h4 class="center">For the period from <%= @date1.to_date.to_s(:long) %> to <%= @date2.to_date.to_s(:long) %></h4>
+<br>
+<table class="table">
+ <thead>
+    <tr>
+      <th></th>
+      <th>Debit (¥)</th>
+      <th>Credit (¥)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Revenues</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% @revenues.each do |r| %>
+    <tr>
+      <td><%= r[0] %></td>
+      <td></td>
+      <td><%= number_to_currency(r[1].abs, :unit => "¥", :precision => 0)  %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td><span class="green"><strong>Total Revenues</strong></span></td>
+      <td></td>
+      <td><span class="green"><strong><strong><%= number_to_currency(@revenues_sum.abs, :unit => "¥", :precision => 0)  %></strong></span></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><strong>Expenses</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% @expenses.each do |e| %>
+    <tr>
+      <td><%= e[0] %></td>
+      <td><%= number_to_currency(e[1].abs, :unit => "¥", :precision => 0)  %></td>
+      <td></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td><span class="red"><strong>Total Expenses</strong></span></td>
+      <td><span class="red"><strong><%= number_to_currency(@expenses_sum, :unit => "¥", :precision => 0)  %></strong></span></td>
+      <td></td>
+    </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+     <tr>
+      <td><strong>Net Income</strong></td>
+      <td></td>
+      <td>
+      	<% if @revenues_sum.abs - @expenses_sum > 0 %>
+      		<span class="green">
+      	<% else %>
+      		<span class="red">
+      	<% end %>	
+      	<strong><%= number_to_currency(@revenues_sum.abs - @expenses_sum, :unit => "¥", :precision => 0)  %></strong></span></td>
+    </tr>
+  </tbody>
+</table>

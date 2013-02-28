@@ -8,9 +8,23 @@ class StaticPagesController < ApplicationController
   def income
     ratearray = Rate.last
     rate = ratearray.rate
-   
-    usd_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("amount < ?", 0).where("currency = ?", "USD").group("categories.name").sum("amount")
-    yen_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("amount < ?", 0).where("currency = ?", "JPY").group("categories.name").sum("amount")
+
+    if (params.has_key?(:date1) && params.has_key?(:date2))
+      year1 = params[:date1][0...4].to_d
+      month1 = params[:date1][5...7].to_d
+      day1 = params[:date1][8...10].to_d
+      year2 = params[:date2][0...4].to_d
+      month2 = params[:date2][5...7].to_d
+      day2 = params[:date2][8...10].to_d
+      @date1 = Date.new(year1,month1,day1)
+      @date2 = Date.new(year2,month2,day2)
+    else  
+      @date1 = Date.today - 1.month
+      @date2 = Date.today
+    end  
+
+    usd_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("date > ?", @date1).where("date < ?", @date2).where("amount < ?", 0).where("currency = ?", "USD").group("categories.name").sum("amount")
+    yen_revenues = Transaction.includes(:category, :group).where("groups.id = ?", 1).where("date > ?", @date1).where("date < ?", @date2).where("amount < ?", 0).where("currency = ?", "JPY").group("categories.name").sum("amount")
     dollar_revenues = usd_revenues.inject({}) { |h, (k, v)| h[k] = v.to_d / 100 * rate; h }
 
     @revenues = dollar_revenues.merge(yen_revenues) {|key,val1,val2| val1+val2}.sort_by{|k,v| v}.reverse
@@ -25,8 +39,8 @@ class StaticPagesController < ApplicationController
       @revenues_sum = revenue_array.inject{|sum,x| sum + x }
     end  
 
-    usd_expenses = Transaction.includes(:category, :group).where("groups.id != ?", 1).where("groups.id != ?", 21).where("amount > ?", 0).where("currency = ?", "USD").group("categories.name").sum("amount")
-    yen_expenses = Transaction.includes(:category, :group).where("groups.id != ?", 1).where("groups.id != ?", 21).where("amount > ?", 0).where("currency = ?", "JPY").group("categories.name").sum("amount")
+    usd_expenses = Transaction.includes(:category, :group).where("groups.id != ?", 1).where("date > ?", @date1).where("date < ?", @date2).where("groups.id != ?", 21).where("amount > ?", 0).where("currency = ?", "USD").group("categories.name").sum("amount")
+    yen_expenses = Transaction.includes(:category, :group).where("groups.id != ?", 1).where("date > ?", @date1).where("date < ?", @date2).where("groups.id != ?", 21).where("amount > ?", 0).where("currency = ?", "JPY").group("categories.name").sum("amount")
     dollar_expenses = usd_expenses.inject({}) { |h, (k, v)| h[k] = v.to_d / 100 * rate; h }
 
     @expenses = dollar_expenses.merge(yen_expenses) {|key,val1,val2| val1+val2}.sort_by{|k,v| v}.reverse
@@ -40,6 +54,12 @@ class StaticPagesController < ApplicationController
     else
       @expenses_sum = expense_array.inject{|sum,x| sum + x }
     end  
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+      
   end
 
   def graph1

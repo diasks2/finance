@@ -18,6 +18,9 @@
 	    <li class="<%= 'active' if current_page?(new_rate_path) %>">
 	    	<%= link_to "New Rate", new_rate_path %>
 	    </li>
+	    <li class="<%= 'active' if current_page?(income_path) %>">
+	    	<%= link_to "Income Statement", income_path %>
+	    </li>
 	  </ul>
 	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(accounts_path) %>">
 	    <%= link_to "Create New Account", new_account_path, :class => "btn btn-warning" %>

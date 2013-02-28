@@ -1,68 +1,46 @@
-<h2 class="center">Income Statement (¥)</h2>
+<br>
+<div class="center well">
+	<%= form_tag "/income", :method => :post, :remote => true, :html => {:class => "form-horizontal"} do %>
+	  <fieldset>
+	  	<span class="help-block">Income statement dynamically generated based upon your input dates. <strong>Choose a start date and an end date.</strong></span>
+		<div class="control-group">
+	      <%= label_tag :date1, "Start Date:", :class => "control-label" %>
+	      <div class="controls">
+	        <%= text_field_tag :date1, nil, :class => "span2 datepicker", :id => "date_field_1" %>
+	      </div>
+	    </div>
+	    <div class="control-group">
+	      <%= label_tag :date2, "End Date:", :class => "control-label" %>
+	      <div class="controls">
+	        <%= text_field_tag :date2, nil, :class => "span2 datepicker", :id => "date_field_2" %>
+	      </div>
+	    </div>
+	    <div class="center">
+	    	<%= submit_tag "Get Income Statement", :disable_with => "Please wait...", :class => "btn btn-primary", :id => "date_submit_button" %>
+	    </div>	
+	   </fieldset>
+	<% end %>   
+</div>	
+<div id='income_statement'>
+	<%= render 'income_statement' %>
+</div>	
+<script>
+$(function() {
+  	$('.datepicker').datepicker({
+      format: 'yyyy/mm/dd'
+ 	});
 
-<table class="table">
- <thead>
-    <tr>
-      <th></th>
-      <th>Debit (¥)</th>
-      <th>Credit (¥)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Revenues</strong></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <% @revenues.each do |r| %>
-    <tr>
-      <td><%= r[0] %></td>
-      <td></td>
-      <td><%= number_to_currency(r[1].abs, :unit => "¥", :precision => 0)  %></td>
-    </tr>
-    <% end %>
-    <tr>
-      <td><strong>Total Revenues</strong></td>
-      <td></td>
-      <td><strong><%= number_to_currency(@revenues_sum.abs, :unit => "¥", :precision => 0)  %></strong></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><strong>Expenses</strong></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <% @expenses.each do |e| %>
-    <tr>
-      <td><%= e[0] %></td>
-      <td><%= number_to_currency(e[1].abs, :unit => "¥", :precision => 0)  %></td>
-      <td></td>
-    </tr>
-    <% end %>
-    <tr>
-      <td><strong>Total Expenses</strong></td>
-      <td><strong><%= number_to_currency(@expenses_sum, :unit => "¥", :precision => 0)  %></strong></td>
-      <td></td>
-    </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-     <tr>
-      <td><strong>Net Income</strong></td>
-      <td></td>
-      <td>
-      	<% if @revenues_sum.abs - @expenses_sum > 0 %>
-      		<span class="green">
-      	<% else %>
-      		<span class="red">
-      	<% end %>	
-      	<strong><%= number_to_currency(@revenues_sum.abs - @expenses_sum, :unit => "¥", :precision => 0)  %></strong></span></td>
-    </tr>
-  </tbody>
-</table>
+  	$("#date_field_2").change(function() {
+  		var n = $('#date_field_1').val(); 
+  		var m = $('#date_field_2').val(); 
+  	    var date_a = new Date(n);
+  	    var date_b = new Date(m);
+	    if (date_a >= date_b) {
+	        alert("'End Date' must be after 'Start Date'");
+	        $('#date_submit_button').attr("disabled", "disabled");
+	    } else {
+	    	$('#date_submit_button').removeAttr("disabled");
+	    }
+ 	});
+});  
+</script>  
