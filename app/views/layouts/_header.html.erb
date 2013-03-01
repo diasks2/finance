@@ -25,6 +25,9 @@
 	    	<%= link_to "BS", balance_path %>
 	    </li>
 	  </ul>
+	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(root_path) %>">
+	    <%= link_to "Download Backup", "#", :class => "btn btn-warning", :remote => true, :id => "download_backup" %>
+	  </div>
 	  <div class="pull-right" style="<%= 'display:none;' unless current_page?(accounts_path) %>">
 	    <%= link_to "Create New Account", new_account_path, :class => "btn btn-warning" %>
 	  </div>
