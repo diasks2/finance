@@ -5,6 +5,28 @@ class StaticPagesController < ApplicationController
     @categories = Category.where("id != ?", 65).order("group_id").order("name").all
   end
 
+  def balance
+    if params.has_key?(:bsdate)
+      year = params[:bsdate][0...4].to_d
+      month = params[:bsdate][5...7].to_d
+      day = params[:bsdate][8...10].to_d
+      @date = Date.new(year,month,day)
+    else  
+      @date = Date.today
+    end 
+
+    respond_to do |format|
+      format.html
+      format.js
+      format.pdf do
+        pdf = BalancePdf.new(@date)
+        send_data pdf.render, filename: "Balance Sheet #{Date.today}",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end
+  end
+
   def income
     ratearray = Rate.last
     rate = ratearray.rate

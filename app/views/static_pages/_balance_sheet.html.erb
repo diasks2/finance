@@ -1,0 +1,101 @@
+<h1 class="center">Balance Sheet (¥ and $)</h1>
+<h2 class="center"><%= @date.to_date.to_s(:long) %></h2>
+<table class="table">
+ <thead>
+    <tr>
+      <th>Assets</th>
+      <th></th>
+      <th></th>
+      <th>Liabilities and Owner's Equity</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Liquid</td>
+      <td><%= number_to_currency(0 - liquid_yen_assets(@date), :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(0 - liquid_dollar_assets(@date)) %></td>
+      <td>Short-term Liabilities</td>
+      <td><%= number_to_currency(st_yen_liabilities(@date), :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(st_dollar_liabilities(@date)) %></td>
+    </tr>
+    <tr>
+      <td>Illiquid</td>
+      <td><%= number_to_currency(0 - illiquid_yen_assets(@date), :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(0 - illiquid_dollar_assets(@date)) %></td>
+      <td>Long-term Liabilities</td>
+      <td><%= number_to_currency(lt_yen_liabilities(@date), :unit => "¥", :precision => 0) %></td>
+      <td><%= number_to_currency(lt_dollar_liabilities(@date)) %></td>
+    </tr>
+    <tr>
+      <td><strong>Total Assets</strong></td>
+      <td><strong><%= number_to_currency(0 - yen_assets(@date), :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong><%= number_to_currency(0 - dollar_assets(@date)) %></strong></td>
+      <td><strong>Total Liabilities</strong></td>
+      <td><strong><%= number_to_currency(yen_liabilities(@date), :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong><%= number_to_currency(dollar_liabilities(@date)) %></strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><strong>Total Owner's Equity</strong></td>
+      <td><strong><%= number_to_currency(0 - equity_yen(@date), :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong><%= number_to_currency(0 - equity_dollar(@date)) %></strong></td>
+    </tr>  
+    <tr>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(0 - yen_assets(@date), :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(0 - dollar_assets(@date)) %></strong></span></td>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(yen_liabilities(@date) - equity_yen(@date), :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(dollar_liabilities(@date) - equity_dollar(@date)) %></strong></span></td>
+    </tr>  
+  </tbody>
+</table>
+<br>
+<br>
+<h2 class="center">Balance Sheet (Converted to ¥)</h2>
+<table class="table">
+ <thead>
+    <tr>
+      <th>Assets</th>
+      <th></th>
+      <th>Liabilities and Owner's Equity</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Liquid</td>
+      <td><%= number_to_currency(0 - liquid_converted_assets(@date), :unit => "¥", :precision => 0) %></td>
+      <td>Short-term Liabilities</td>
+      <td><%= number_to_currency(st_converted_liabilities(@date), :unit => "¥", :precision => 0) %></td>
+    </tr>
+    <tr>
+      <td>Illiquid</td>
+      <td><%= number_to_currency(0 - illiquid_converted_assets(@date), :unit => "¥", :precision => 0) %></td>
+      <td>Long-term Liabilities</td>
+      <td><%= number_to_currency(lt_converted_liabilities(@date), :unit => "¥", :precision => 0) %></td>
+    </tr>
+    <tr>
+      <td><strong>Total Assets</strong></td>
+      <td><strong><%= number_to_currency(0 - converted_assets(@date), :unit => "¥", :precision => 0) %></strong></td>
+      <td><strong>Total Liabilities</strong></td>
+      <td><strong><%= number_to_currency(converted_liabilities(@date), :unit => "¥", :precision => 0) %></strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><strong>Total Owner's Equity</strong></td>
+      <td><strong><%= number_to_currency(0 - equity_converted(@date), :unit => "¥", :precision => 0) %></strong></td>
+    </tr>
+    <tr>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(0 - converted_assets(@date), :unit => "¥", :precision => 0) %></strong></span></td>
+      <td><span class="pink"><strong>Total</strong></span></td>
+      <td><span class="pink"><strong><%= number_to_currency(converted_liabilities(@date) - equity_converted(@date), :unit => "¥", :precision => 0) %></strong></span></td>
+    </tr>
+</tbody>
+</table>

@@ -57,8 +57,8 @@ class IncomePdf < Prawn::Document
 	      columns(0).width = 350
 	      columns(1..2).width = 90
 	    end
-	else
-		table net_income do
+	  else
+		  table net_income do
 	      row(0).font_style = :bold
 	      cells.style(:border_width => 0)
 	      column(2).style(:text_color => "db1629") 
@@ -66,7 +66,7 @@ class IncomePdf < Prawn::Document
 	      columns(0).width = 350
 	      columns(1..2).width = 90
 	    end   
-	end
+	  end
   end
 
   def rev_line_item_rows
@@ -94,7 +94,5 @@ class IncomePdf < Prawn::Document
   def net_income
     [["Net Income", "", number_to_currency(@revenues_sum.abs - @expenses_sum, :unit => "¥", :precision => 0)]]
   end
-
- 
 
 end
