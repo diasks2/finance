@@ -58,7 +58,7 @@ class TransactionsController < ApplicationController
         render :json => @transactions.to_json
       }
       format.csv { send_data Transaction.to_csv, :filename => "Finance_transactions_#{Time.now.to_date.to_s}.csv" }
-      format.xls
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Finance_transactions_#{Time.now.to_date.to_s}.xls\"" }
     end
   end
 

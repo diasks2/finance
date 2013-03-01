@@ -1,5 +1,10 @@
 <% provide(:title, 'Categories') %>
 <h1 class="center">Categories</h1>
+<p>
+  Download:
+  <%= link_to "CSV", categories_path(format: "csv") %> |
+  <%= link_to "Excel", categories_path(format: "xls") %>
+</p>
 <table class="table">
  <thead>
     <tr>

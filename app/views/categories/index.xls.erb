@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Categories">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Category ID</Data></Cell>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+        <Cell><Data ss:Type="String">Group ID</Data></Cell>
+      </Row>
+    <% @categories.each do |c| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= c.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= c.group.id %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

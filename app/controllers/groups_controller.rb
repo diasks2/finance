@@ -37,7 +37,7 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data Group.to_csv, :filename => "Finance_groups_#{Time.now.to_date.to_s}.csv" }
-      format.xls
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Finance_groups_#{Time.now.to_date.to_s}.xls\"" }
     end  
   end
 

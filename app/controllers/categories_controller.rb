@@ -33,6 +33,11 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = Category.order("group_id").order("name").all
+    respond_to do |format|
+      format.html
+      format.csv { send_data Category.to_csv, :filename => "Finance_categories_#{Time.now.to_date.to_s}.csv" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Finance_categories_#{Time.now.to_date.to_s}.xls\"" }
+    end  
   end
 
   def destroy

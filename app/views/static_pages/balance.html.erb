@@ -17,7 +17,7 @@
 	<% end %>   
 </div>
 
-<p><%= link_to "Download Balance Sheet (PDF)", balance_path(format: "pdf") %></p>
+<p><%= link_to "Balance Sheet (PDF) for #{Date.today.to_date.to_s(:long)}", balance_path(format: "pdf") %></p>
 <br>
 <div id='balance_sheet'>
 	<%= render 'balance_sheet' %>

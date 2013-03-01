@@ -22,7 +22,7 @@
 	   </fieldset>
 	<% end %>   
 </div>
-<p><%= link_to "Download Income Statement (PDF)", income_path(format: "pdf") %></p>
+<p><%= link_to "Income Statement (PDF) for #{(Date.today - 1.month).to_date.to_s(:long)} to #{Date.today.to_date.to_s(:long)} ", income_path(format: "pdf") %></p>
 <div id='income_statement'>
 	<%= render 'income_statement' %>
 </div>	
