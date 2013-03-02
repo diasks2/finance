@@ -21,27 +21,30 @@
         <%= form.collection_select :category_id, Category.all, :id, :name, {}, {:class => "span3 category_select"} %>
       </div>
     </div>    
-
-    <% [:transaction_a, :transaction_b].each do |transaction| %>
-      <h4><% if transaction == :transaction_a %>Expense Amount (Positive Number)<% else %>Revenue Amount (Negative Number)<% end %></h4>
-      <div class="well">
-        <%= fields_for transaction do |f| %>
-          <div class="control-group">
-            <%= f.label :converted_amount, "Amount:", :class => "control-label" %>
-            <div class="controls">
-              <div class="input-prepend">
-                <span class="add-on"><span class="yen">¥</span><span class="dollar">$</span></span>
-                <%= f.text_field :converted_amount, :class => "span2", :id => "prependedInput" %>
-              </div>
-            </div>
-          </div>    
-          <div class="control-group">
-            <%= f.label :account_id, "Account:", :class => "control-label" %>
-            <div class="controls">
-              <%= f.collection_select :account_id, Account.all, :id, :name, {}, {:class => "span3 account_select"} %>
-            </div>
-          </div>    
-      </div>    
+    <% $i = 1; begin %> 
+      <% [:transaction_a, :transaction_b].each do |transaction| %>
+        <h4><% if transaction == :transaction_a %>Expense Amount (Positive Number)<% else %>Revenue Amount (Negative Number)<% end %></h4>
+          <%= fields_for transaction do |f| %>
+            <div class="well">      
+              <div class="control-group">
+                <%= f.label :converted_amount, "Amount:", :class => "control-label" %>
+                <div class="controls">
+                  <div class="input-prepend">
+                    <span class="add-on"><span class="yen">¥</span><span class="dollar">$</span></span>
+                    <%= f.text_field :converted_amount, :class => "span2", :id => "prependedInput#{$i}" %>
+                  </div>
+                </div>
+              </div>    
+              <div class="control-group">
+                <%= f.label :account_id, "Account:", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.collection_select :account_id, Account.all, :id, :name, {}, {:class => "span3 account_select"} %>
+                </div>
+              </div>    
+            </div>  
+               
+          <% end %>     
+        <% $i +=1; %>  
       <% end %> 
     <% end %>  
     <div class="center">
@@ -65,6 +68,11 @@ $(function() {
       $('.yen').hide();
     }
   });  
+  $("#prependedInput1").change(function() {
+    var n = $("#prependedInput1").val();
+    var m = parseInt(n) * -1;
+    $("#prependedInput2").val(m); 
+  });
   $('.datepicker').datepicker({
       format: 'yyyy/mm/dd'
   });
@@ -81,4 +89,4 @@ $(function() {
         allowClear: true
   }); 
 });  
-</script>  
+</script>
