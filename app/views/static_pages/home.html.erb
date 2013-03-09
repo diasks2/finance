@@ -113,7 +113,7 @@ d3.json(url1, function(error, data) {
 
   function mover(d) {
     $("#chart1_tool_tip").fadeOut(100,function () {
-      $("#vis-tool-tip-title1").html(d.data.category.name);  
+      $("#vis-tool-tip-title1").html(d.data.name);  
       $("#chart1_tool_tip").fadeIn(100);
     });
   }

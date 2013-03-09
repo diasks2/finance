@@ -91,10 +91,10 @@ class StaticPagesController < ApplicationController
   end
 
   def graph1
-    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).where("groups.id != ?", 21).group("category_id")
+    @transactions = Transaction.includes(:category, :group).where("amount > ?", 0).where("groups.id != ?", 1).where("groups.id != ?", 21).group("categories.name").sum("amount")
     respond_to do |format|
       format.json {
-        render :json => JSON.generate(@transactions.as_json(:include => [:category, :group]))
+        render :json => custom_json_for(@transactions)
       }
     end
   end
