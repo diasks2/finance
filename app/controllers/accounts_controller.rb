@@ -29,7 +29,7 @@ class AccountsController < ApplicationController
 
   def show
     @account = Account.find(params[:id])
-    @account_transactions = Transaction.where("account_id = ?", params[:id]).all
+    @account_transactions = Transaction.where("account_id = ?", params[:id]).order("date").all
   end
 
   def index
