@@ -16,7 +16,6 @@
       <th>Date</th>
       <th>Amount ¥</th>
       <th>Amount $</th>
-      <th>Balance Coverted ¥</th>
       <th>Category</th>
       <th>Group</th>
     </tr>
@@ -32,7 +31,6 @@
 	      	<td><%= number_to_currency(0 - at.converted_amount, :unit => "¥", :precision => 0) %></td>
 	      	<td></td>
 	      <% end %>	
-        <td><%= number_to_currency(0 - account_balance(at.account_id, at.date), :unit => "¥", :precision => 0) %></td>
 	      <td><%= at.category.name %></td>
 	      <td><%= at.category.group.name %></td>
 	    </tr>
@@ -41,8 +39,6 @@
       	<td><strong>Totals</strong></td>
   	    <td><strong><%= number_to_currency(0 - yen_balance(@account.id), :unit => "¥", :precision => 0) %></strong></td>
   	    <td><strong><%= number_to_currency(0 - dollar_balance(@account.id)) %></strong></td>
-        <td><strong><%= number_to_currency(0 - converted_balance(@account.id), :unit => "¥", :precision => 0) %></strong></td>
-  	    <td></td>
   	    <td></td>
       </tr>  
   </tbody>

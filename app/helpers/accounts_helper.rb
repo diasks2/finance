@@ -24,7 +24,4 @@ module AccountsHelper
     (Transaction.where("currency = ?", "USD").sum("amount").to_d / 100 * rate) + Transaction.where("currency = ?", "JPY").sum("amount")
   end
 
-  def account_balance(account_id, date)
-    (Transaction.where("account_id = ?", account_id).where("currency = ?", "USD").where("date <= ?", date).sum("amount").to_d / 100 * rate) + Transaction.where("account_id = ?", account_id).where("currency = ?", "JPY").where("date <= ?", date).sum("amount")
-  end
 end
