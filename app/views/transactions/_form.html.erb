@@ -19,6 +19,9 @@
       <%= form.label :category_id, "Category:", :class => "control-label" %>
       <div class="controls">
         <%= form.collection_select :category_id, Category.all, :id, :name, {}, {:class => "span3 category_select"} %>
+         <div class="link_to_right">
+            <%= link_to "New Category?", new_category_path %>
+          </div>
       </div>
     </div>    
     <% $i = 1; begin %> 
@@ -39,6 +42,9 @@
                 <%= f.label :account_id, "Account:", :class => "control-label" %>
                 <div class="controls">
                   <%= f.collection_select :account_id, Account.all, :id, :name, {}, {:class => "span3 account_select"} %>
+                  <div class="link_to_right">
+                    <%= link_to "New Account?", new_account_path %>
+                  </div>
                 </div>
               </div>    
             </div>  

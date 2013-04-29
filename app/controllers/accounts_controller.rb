@@ -8,7 +8,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(params[:account])
     if @account.save
-      redirect_to @account, notice: "New Account Successfully Created"
+      redirect_to new_transaction_path, notice: "New Account Successfully Created"
     else
       render :new
     end
